@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  dashboard:
+    build:
+      context: ./dashboard
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: ./api
+    ports:
+      - "3001:3001"
+    environment:
+      - MYSQL_HOST=database
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=mydb
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
