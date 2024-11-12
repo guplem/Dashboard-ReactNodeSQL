@@ -19,9 +19,9 @@ Root/
  └── .env
 ```
 
-- `dashboard/`: Contains the React Admin frontend application built with TypeScript.
-- `api/`: Contains the Express API backend built with TypeScript.
-- `database/`: Contains MySQL database initialization scripts (e.g., schema creation, seeding).
+- `dashboard/`: Contains the **React Admin** frontend application built with TypeScript.
+- `api/`: Contains the **Express** API backend built with **Prisma** and TypeScript.
+- `database/`: Contains the **MySQL** database initialization (database creation).
 - `docker-compose.yml`: Defines services for the frontend, backend, and database.
 - `.env`: Stores environment variables (e.g., MySQL root password, database name).
 
