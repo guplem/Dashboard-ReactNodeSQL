@@ -37,10 +37,10 @@ Before running the application, make sure you have the following installed:
 
 ### 1. Clone the Repository
 
-Clone this repository to your local machine *(and navigate to the project folder)*:
+Clone this repository to your local machine _(and navigate to the project folder)_:
 
 ```bash
-git clone https://github.com/guplem/Dashboard-ReacNodeSQL.git
+git clone https://github.com/guplem/Dashboard-ReactNodeSQL.git
 cd full-stack-react-admin-node-mysql-docker
 ```
 
