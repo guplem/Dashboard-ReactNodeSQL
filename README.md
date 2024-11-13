@@ -9,21 +9,26 @@ This repository contains a full stack application with three main components:
 All components are containerized using Docker, making it easy to run and share the application with just a single command.
 
 ## Project Structure
+The following are the main directories and setup files in this project:
 
 ```
 Root/
  ├── dashboard/
+ |    └── .env
  ├── api/
+ |    ├── prisma/
+ |    ├── entrypint.sh
+ |    └── .env
  ├── database/
- ├── docker-compose.yml
- └── .env
+ └── docker-compose.yml
 ```
 
 - `dashboard/`: Contains the **React Admin** frontend application built with TypeScript.
 - `api/`: Contains the **Express** API backend built with **Prisma** and TypeScript.
+  - `prisma/`: Contains the **Prisma** schema and migrations.
+  - `entrypoint.sh`: A shell script that performs database migrations and starts the API server.
 - `database/`: Contains the **MySQL** database initialization (database creation).
 - `docker-compose.yml`: Defines services for the frontend, backend, and database.
-- `.env`: Stores environment variables (e.g., MySQL root password, database name).
 
 ## Prerequisites
 
@@ -90,7 +95,7 @@ This will stop and remove the containers, but it will keep your data in the MySQ
 ### Database (MySQL)
 
 - The MySQL service is configured using the official `mysql:8.0` Docker image.
-- The database is initialized using a custom SQL script located in `database/init.sql`, which creates the database and a tables with some sample data.
+- The database is initialized using a custom SQL script located in `database/init.sql`, which creates the database.
 
 ### Docker Setup
 

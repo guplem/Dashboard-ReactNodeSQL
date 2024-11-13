@@ -7,8 +7,11 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
+# This seems to be necessary lately to make NPM install not take forever: https://forums.docker.com/t/npm-install-in-docker-tutorial-is-taking-forever/139328/14
+RUN npm config set strict-ssl false
+
 # Install dependencies
-RUN npm install
+RUN npm install --force --loglevel verbose
 
 # Copy the rest of the application
 COPY . .
