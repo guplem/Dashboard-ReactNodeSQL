@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import postsRouter from "./routes/posts";
-import healthRouter from "./routes/health";
+import { router as postsRouter } from "./routes/posts";
+import { router as healthRouter } from "./routes/health";
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(cors(corsOptions)); // Apply CORS to all routes
 
 app.use(express.json());
 app.use("/health", healthRouter);
-app.use("/api", postsRouter);
+app.use("/posts", postsRouter);
 
 app.listen(3001, () => {
   console.log("\nAPI is running! 🚀");

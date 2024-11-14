@@ -1,5 +1,5 @@
-import React from 'react';
-import { List, Datagrid, TextField } from 'react-admin';
+import React from "react";
+import { List, Datagrid, TextField, DateField } from "react-admin";
 
 export const PostList = (props: any) => (
   <List {...props}>
@@ -7,6 +7,7 @@ export const PostList = (props: any) => (
       <TextField source="id" />
       <TextField source="title" />
       <TextField source="content" />
+      <DateField source="createdAt" />
     </Datagrid>
   </List>
 );

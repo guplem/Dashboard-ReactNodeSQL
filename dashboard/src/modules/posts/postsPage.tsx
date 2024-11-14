@@ -3,8 +3,8 @@ import { Admin, Resource } from "react-admin";
 import simpleRestProvider from "ra-data-simple-rest";
 import { PostList } from "./postsList";
 
-export const Page2 = () => {
-  const dataProvider = simpleRestProvider("http://localhost:3001/api");
+export const PostsPage = () => {
+  const dataProvider = simpleRestProvider(`${process.env.REACT_APP_API_URL}/posts`);
 
   return (
     <div>

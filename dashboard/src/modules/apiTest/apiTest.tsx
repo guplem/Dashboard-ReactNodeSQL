@@ -8,7 +8,7 @@ enum Status {
   Success = "Success",
 }
 
-export const Page1 = () => {
+export const ApiTest = () => {
   const [message, setMessage] = useState(""); // State to hold the message
   const [status, setStatus] = useState<Status>(Status.Pending); // State to hold the status
 

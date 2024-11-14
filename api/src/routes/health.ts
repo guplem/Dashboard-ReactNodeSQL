@@ -1,6 +1,6 @@
 import express from "express";
 
-const router = express.Router();
+export const router = express.Router();
 
 // Simple health check to make sure the API is running
 router.get("/hello-world", async (req, res) => {
@@ -10,5 +10,3 @@ router.get("/hello-world", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
-
-export default router;
