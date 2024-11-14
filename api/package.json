@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -L --watch src --ext ts --exec tsx src/index.ts",
+    "seed": "ts-node prisma/seed.ts",
     "start": "tsx src/index.ts"
   },
   "keywords": [],
