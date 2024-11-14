@@ -11,6 +11,10 @@ done
 echo "💽 Running Prisma migrations..."
 npx prisma migrate deploy
 
+# Seed the database with initial data
+echo "🌱 Seeding the database with initial data..."
+npx prisma db seed
+
 # Run the API server with hot reloading in development mode
 if [ "$NODE_ENV" = "development" ]; then
   echo "\n⚒️ Starting API server in development mode with hot reloading..."

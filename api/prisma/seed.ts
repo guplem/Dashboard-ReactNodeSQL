@@ -1,30 +1,48 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create sample posts
-  await prisma.post.create({
-    data: {
-      title: 'First Post',
-      content: 'This is the first post.',
+  const alicePost = await prisma.post.upsert({
+    where: { id: 1 }, 
+    update: {},
+    create: {
+      id: 1,
+      title: "Check out Prisma with Next.js",
+      content: "https://www.prisma.io/nextjs",
     },
   });
 
-  await prisma.post.create({
-    data: {
-      title: 'Second Post',
-      content: 'This is the second post.',
+  const bobPosts = await prisma.post.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+        id: 2,
+
+      title: "Follow Prisma on Twitter",
+      content: "https://twitter.com/prisma",
     },
   });
 
-  console.log('Seed data inserted!');
+  const secondBobPost = await prisma.post.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
+        id: 3,
+      title: "Follow Nexus on Twitter",
+      content: "https://twitter.com/nexusgql",
+    },
+  });
+
+  console.log({ alicePost, bobPosts, secondBobPost });
 }
 
 main()
-  .catch(e => {
-    throw e;
-  })
-  .finally(async () => {
+  .then(async () => {
     await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error("Error seeding data:", e);
+    await prisma.$disconnect();
+    process.exit(1);
   });
