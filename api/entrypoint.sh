@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Load environment variables from the .env file (if needed)
-# Uncomment this line if you need dotenv or similar
+# Load environment variables from the .env file 
 # source .env 
 
 # Wait for MySQL to be ready

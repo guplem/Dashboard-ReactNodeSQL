@@ -16,7 +16,7 @@ RUN npm config set strict-ssl false
 # Install dependencies
 RUN npm install --force --loglevel verbose
 
-# Copy your entrypoint script into the container
+# Copy the entrypoint script into the container
 COPY entrypoint.sh ./entrypoint.sh
 
 # Make sure the entrypoint script has executable permissions
