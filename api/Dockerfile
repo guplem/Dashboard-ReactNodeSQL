@@ -30,6 +30,3 @@ EXPOSE 3001
 
 # Set the entrypoint to your custom entrypoint script
 ENTRYPOINT ["bash", "./entrypoint.sh"]
-
-# The CMD is not necessary because ENTRYPOINT already starts the app
-# CMD ["npx", "ts-node", "src/index.ts"]

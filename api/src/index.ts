@@ -1,5 +1,5 @@
 import express from "express";
-import cors from 'cors';
+import cors from "cors";
 import postsRouter from "./routes/posts";
 import healthRouter from "./routes/health";
 
@@ -8,7 +8,7 @@ const app = express();
 // Enable CORS for the frontend
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow all necessary methods
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allow all necessary methods
   // credentials: true, // If needed to send cookies, include this
 };
 
@@ -19,5 +19,5 @@ app.use("/health", healthRouter);
 app.use("/api", postsRouter);
 
 app.listen(3001, () => {
-  console.log("API is running! 🚀");
+  console.log("\nAPI is running! 🚀");
 });

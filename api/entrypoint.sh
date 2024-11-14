@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Load environment variables from the .env file 
-# source .env 
-
 # Wait for MySQL to be ready
 echo "Waiting for MySQL to be ready..."
 until nc -z -v -w30 $MYSQL_HOST $MYSQL_PORT; do
@@ -11,9 +8,16 @@ until nc -z -v -w30 $MYSQL_HOST $MYSQL_PORT; do
 done
 
 # Run Prisma migrations
-echo "Running Prisma migrations..."
+echo "💽 Running Prisma migrations..."
 npx prisma migrate deploy
 
-# Start the API server
-echo "Starting API server..."
-npm run start
+# Run the API server with hot reloading in development mode
+if [ "$NODE_ENV" = "development" ]; then
+  echo "\n⚒️ Starting API server in development mode with hot reloading..."
+  # npx nodemon --watch . --ext js,ts,json --exec "npm run start"
+  # npx nodemon -L --exec "tsx src/index.ts"
+  npm run dev
+else
+  echo "\n🏛️ Starting API server in production mode..."
+  npm run start
+fi
