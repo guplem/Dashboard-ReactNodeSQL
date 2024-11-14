@@ -5,7 +5,7 @@ import { Card, CardContent, Typography, Button } from "@mui/material";
 enum Status {
   Pending = "Pending",
   Failed = "Failed",
-  Success = "Success"
+  Success = "Success",
 }
 
 export const Page1 = () => {
@@ -50,18 +50,15 @@ export const Page1 = () => {
       <Card>
         <CardContent>
           <Typography variant="h5" component="div">
-            Api Tests
+            API Health Check
           </Typography>
         </CardContent>
       </Card>
-      <p>API health check: {message}</p>
-      <p>Status: {status} {getStatusEmoji(status)}</p>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={fetchMessage} 
-        disabled={status === Status.Pending}
-      >
+      <p>API says: {message}</p>
+      <p>
+        Status: {status} {getStatusEmoji(status)}
+      </p>
+      <Button variant="contained" color="primary" onClick={fetchMessage} disabled={status === Status.Pending}>
         Retry
       </Button>
     </div>
