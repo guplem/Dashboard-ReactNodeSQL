@@ -3,6 +3,7 @@ import { Home } from "../home/home";
 import { Page1 as ApiTest } from "../apiTest/apiTest";
 import { Page2 as PostsPage } from "../posts/postsPage";
 
+// Encapsulates the full dashboard
 export const Dashboard = () => {
   return (
     // Menu items are defined here
