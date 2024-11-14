@@ -1,10 +1,13 @@
+// This file is used to seed the database with initial data.
+// https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
   const alicePost = await prisma.post.upsert({
-    where: { id: 1 }, 
+    where: { id: 1 },
     update: {},
     create: {
       id: 1,
@@ -17,7 +20,7 @@ async function main() {
     where: { id: 2 },
     update: {},
     create: {
-        id: 2,
+      id: 2,
 
       title: "Follow Prisma on Twitter",
       content: "https://twitter.com/prisma",
@@ -28,7 +31,7 @@ async function main() {
     where: { id: 3 },
     update: {},
     create: {
-        id: 3,
+      id: 3,
       title: "Follow Nexus on Twitter",
       content: "https://twitter.com/nexusgql",
     },
