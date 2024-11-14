@@ -23,7 +23,7 @@ services:
       - ./api/.env
     volumes:
       - ./api:/app
-      - /app/node_modules  # Avoids node_modules conflict
+      - /app/node_modules # Avoids node_modules conflict
     depends_on:
       - database
     networks:
@@ -36,6 +36,8 @@ services:
       MYSQL_DATABASE: mydb
     ports:
       - "3306:3306"
+    volumes:
+      - ./database/data:/var/lib/mysql # Persist data within the host machine
     networks:
       - app-network
 
