@@ -4,6 +4,11 @@ services:
       context: ./dashboard
     ports:
       - "3000:3000"
+    env_file:
+      - ./dashboard/.env
+    volumes:
+      - ./dashboard:/app
+      - /app/node_modules # Avoids conflicts with node_modules
     depends_on:
       - api
     networks:
@@ -28,15 +33,9 @@ services:
       MYSQL_DATABASE: mydb
     ports:
       - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  mysql-data:
-    driver: local
