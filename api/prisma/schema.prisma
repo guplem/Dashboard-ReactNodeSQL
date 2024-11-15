@@ -48,5 +48,46 @@ model Project {
   name              String
   type              ProjectType @default(RAG)
   conformityProgress Decimal    @default(0.0)
+  evaluations       Evaluation[] @relation("ProjectEvaluations")
 }
 
+model System {
+  id       Int         @id @default(autoincrement())
+  name     String
+  evaluations Evaluation[] @relation("SystemEvaluations")
+}
+
+model Dataset {
+  id       Int         @id @default(autoincrement())
+  name     String
+  evaluations Evaluation[] @relation("DatasetEvaluations")
+}
+
+enum MetricType {
+  accuracy
+  relevancy
+  helpfulness
+  toxicity
+}
+
+model Metric {
+  id       Int         @id @default(autoincrement())
+  type     MetricType
+  score    Decimal     @default(0.0)
+  evaluations Evaluation[] @relation("MetricEvaluations")
+}
+
+model Evaluation {
+  id        Int      @id @default(autoincrement())
+  projectId Int
+  systemId  Int
+  datasetId Int
+  metricId  Int
+  score     Decimal  @default(0.0)
+  date      DateTime @default(now())
+
+  project   Project  @relation("ProjectEvaluations", fields: [projectId], references: [id], onDelete: Cascade)
+  system    System   @relation("SystemEvaluations", fields: [systemId], references: [id], onDelete: Cascade)
+  dataset   Dataset  @relation("DatasetEvaluations", fields: [datasetId], references: [id], onDelete: Cascade)
+  metric    Metric   @relation("MetricEvaluations", fields: [metricId], references: [id], onDelete: Cascade)
+}
