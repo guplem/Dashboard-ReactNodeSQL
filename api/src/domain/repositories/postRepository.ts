@@ -12,10 +12,10 @@ export interface PostRepository {
 
   /**
    * Retrieves a single post by its ID.
-   * @param id - The ID of the post, e.g., 123 or "abc".
+   * @param id - The ID of the post, e.g., 123
    * @returns A promise that resolves to the post.
    */
-  getOne(id: number | string): Promise<Post>;
+  getOne(id: number): Promise<Post>;
 
   /**
    * Retrieves multiple posts based on filter criteria.
@@ -40,16 +40,16 @@ export interface PostRepository {
 
   /**
    * Updates a post by its ID.
-   * @param id - The ID of the post, e.g., 123 or "abc".
+   * @param id - The ID of the post, e.g., 123
    * @param post - The post data to update.
    * @returns A promise that resolves to the updated post.
    */
-  update(id: number | string, post: Post): Promise<Post>;
+  update(id: number, post: Post): Promise<Post>;
 
   /**
    * Deletes a post by its ID.
-   * @param id - The ID of the post, e.g., 123 or "abc".
+   * @param id - The ID of the post, e.g., 123
    * @returns A promise that resolves when the post is deleted.
    */
-  delete(id: number | string): Promise<void>;
+  delete(id: number): Promise<void>;
 }
