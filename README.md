@@ -9,6 +9,15 @@ This repository contains a full stack application with three main components:
 All components are containerized using Docker, making it easy to run and share the application with just a single command.
 
 ## Project Structure
+
+The following are the main directories and setup files in this project:
+
+Understood! Here’s the updated project structure without mentioning specific `.ts` files and with the same clean and consistent style:
+
+---
+
+## Project Structure
+
 The following are the main directories and setup files in this project:
 
 ```
@@ -17,18 +26,45 @@ Root/
  |    └── .env
  ├── api/
  |    ├── prisma/
- |    ├── entrypint.sh
- |    └── .env
+ |    ├── entrypoint.sh
+ |    ├── .env
+ |    └── src/
+ |         ├── application/
+ |         │    └── services/
+ |         ├── domain/
+ |         │    ├── models/
+ |         │    └── repositories/
+ |         ├── infrastructure/
+ |         │    ├── repositories/
+ |         │    └── http/
+ |         └── tests/
  ├── database/
  └── docker-compose.yml
 ```
 
-- `dashboard/`: Contains the **React Admin** frontend application built with TypeScript.
-- `api/`: Contains the **Express** API backend built with **Prisma** and TypeScript.
-  - `prisma/`: Contains the **Prisma** schema and migrations.
-  - `entrypoint.sh`: A shell script that performs database migrations and starts the API server.
-- `database/`: Contains the **MySQL** database initialization (database creation).
-- `docker-compose.yml`: Defines services for the frontend, backend, and database.
+### Overview of Key Directories and Files
+
+- **dashboard/**: Contains the **React Admin** frontend application built with TypeScript.
+
+- **api/**: Contains the **Express** API backend built with **Prisma** and TypeScript.
+
+  - **prisma/**: Contains the **Prisma** schema and migrations.
+  - **entrypoint.sh**: A shell script that performs database migrations and starts the API server.
+  - **.env**: Environment variables for the API service.
+  - **src/**:
+    - **application/**: Contains the business logic (use cases) that orchestrates interactions between the domain and infrastructure layers.
+      - **services/**: Contains business use cases that handle the core operations of the application.
+    - **domain/**: Defines the core business models and repository interfaces.
+      - **models/**: Contains domain entities, which represent the core data models of the application.
+      - **repositories/**: Contains repository interfaces that define methods for interacting with the data layer.
+    - **infrastructure/**: Contains concrete implementations for interacting with external systems, like databases or HTTP services.
+      - **repositories/**: Implements repository interfaces, interacting with the database or external services.
+      - **http/**: Contains the HTTP server setup, including route definitions and middlewares.
+    - **tests/**: Contains unit and integration tests for each layer of the application.
+
+- **database/**: Contains the **MySQL** database creation scripts (and, when running with the docker-compose, the database data).
+
+- **docker-compose.yml**: Defines services for the frontend, backend, and database, making it easier to manage the development environment using Docker.
 
 ## Prerequisites
 

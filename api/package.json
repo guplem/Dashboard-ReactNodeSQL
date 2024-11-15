@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -L --watch src --ext ts --exec tsx src/index.ts",
+    "dev": "nodemon -L --watch src --ext ts --exec tsx src/infrastructure/http/server.ts",
     "seed": "tsx prisma/seed.ts",
-    "start": "tsx src/index.ts"
+    "start": "tsx src/infrastructure/http/server.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
