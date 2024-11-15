@@ -3,6 +3,7 @@ import { Home } from "../home/home";
 import { ApiTest } from "../apiTest/apiTest";
 import simpleRestProvider from "ra-data-simple-rest";
 import { Route } from "react-router-dom";
+import PostIcon from "@mui/icons-material/Book";
 
 import { PostList } from "../posts/postList";
 import { PostCreate } from "../posts/postCreate";
@@ -16,7 +17,16 @@ export const Dashboard = () => {
   return (
     // Menu items are defined here
     <Admin dataProvider={dataProvider} dashboard={Home}>
-      <Resource name="Posts" list={PostList} create={PostCreate} edit={PostEdit} show={PostShow} />
+      <Resource
+        name="Posts"
+        options={{ label: "Posts Demo" }}
+        recordRepresentation={(record) => ` - ${record.title}`}
+        icon={PostIcon}
+        list={PostList}
+        create={PostCreate}
+        edit={PostEdit}
+        show={PostShow}
+      />
       <CustomRoutes>
         <Route path="/api-test" element={<ApiTest />} />
       </CustomRoutes>
