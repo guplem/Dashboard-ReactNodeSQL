@@ -1,16 +1,12 @@
-import { Admin, Resource } from "react-admin";
-import simpleRestProvider from "ra-data-simple-rest";
+import { Admin, Layout, Resource } from "react-admin";
 import { PostList } from "./postsList";
+// import { ReactQueryDevtools } from "react-query/devtools";
 
 export const PostsPage = () => {
-  const dataProvider = simpleRestProvider(`${process.env.REACT_APP_API_URL}/posts`);
-
   return (
     <div>
       <h1>Posts</h1>
-      <Admin dataProvider={dataProvider}>
-        <Resource name="posts" list={PostList} />
-      </Admin>
+      <Resource name="posts" list={PostList} />
     </div>
   );
 };
