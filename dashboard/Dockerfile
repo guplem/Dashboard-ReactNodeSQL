@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm config set strict-ssl false
 
 # Install dependencies
-RUN npm install --force --loglevel verbose
+RUN npm ci --loglevel verbose
 
 # Copy the rest of the application
 COPY . .

@@ -1,11 +1,21 @@
 #!/bin/bash
 
+echo "🚧 Starting build process for the API server..."
+
 # Wait for MySQL to be ready
-echo "Waiting for MySQL to be ready..."
-until nc -z -v -w30 $MYSQL_HOST $MYSQL_PORT; do
-  echo "Waiting for MySQL server at $MYSQL_HOST:$MYSQL_PORT..."
+until mysqladmin ping -h"$MYSQL_HOST"; do
+  echo "⏳ Waiting for MySQL server at $MYSQL_HOST:$MYSQL_PORT to be up..."
   sleep 5
 done
+
+echo "✅ MySQL server is up."
+
+echo "⏳ Waiting for connection to MySQL server at $MYSQL_HOST:$MYSQL_PORT to be ready..."
+/usr/local/bin/wait-for-it.sh $MYSQL_HOST:$MYSQL_PORT --timeout=60 -- echo "✅ MySQL connection is ready."
+
+# Run Prisma generate to ensure the Prisma Client is generated
+echo "🔄 Generating Prisma Client..."
+npx prisma generate
 
 # Run Prisma migrations
 echo "💽 Running Prisma migrations..."
