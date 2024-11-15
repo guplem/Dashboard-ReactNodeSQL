@@ -12,10 +12,11 @@ export const postRouter = (postService: PostService) => {
       const sort = req.query.sort ? JSON.parse(req.query.sort as string) : [];
       const range = req.query.range ? JSON.parse(req.query.range as string) : [0, 24];
       const filter = req.query.filter ? JSON.parse(req.query.filter as string) : {};
-      const posts = await postService.getList(sort, range, filter);
-      res.set("Content-Range", `posts ${range[0]}-${range[1]}/${posts.total}`);
-      res.json(posts.posts);
+      const data = await postService.getList(sort, range, filter);
+      res.set("Content-Range", `posts ${range[0]}-${range[1]}/${data.total}`);
+      res.json(data.posts);
     } catch (error) {
+      console.error("Error executing GET /", error);
       if (error instanceof Error) {
         res.status(500).json({ error: `GET / - ${error.message}` });
       } else {
@@ -32,6 +33,7 @@ export const postRouter = (postService: PostService) => {
       const post = await postService.getOne(req.params.id);
       res.json(post);
     } catch (error) {
+      console.error(`Error executing GET /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `GET /${req.params.id} - ${error.message}` });
       } else {
@@ -49,6 +51,7 @@ export const postRouter = (postService: PostService) => {
       const posts = await postService.getMany(filter);
       res.json(posts);
     } catch (error) {
+      console.error("Error executing GET /", error);
       if (error instanceof Error) {
         res.status(500).json({ error: `GET / - ${error.message}` });
       } else {
@@ -66,6 +69,7 @@ export const postRouter = (postService: PostService) => {
       const posts = await postService.getManyReference(filter);
       res.json(posts);
     } catch (error) {
+      console.error("Error executing GET /", error);
       if (error instanceof Error) {
         res.status(500).json({ error: `GET / - ${error.message}` });
       } else {
@@ -82,6 +86,7 @@ export const postRouter = (postService: PostService) => {
       const post = await postService.create(req.body);
       res.status(201).json(post);
     } catch (error) {
+      console.error("Error executing POST /", error);
       if (error instanceof Error) {
         res.status(500).json({ error: `POST / - ${error.message}` });
       } else {
@@ -98,6 +103,7 @@ export const postRouter = (postService: PostService) => {
       const post = await postService.update(req.params.id, req.body);
       res.json(post);
     } catch (error) {
+      console.error(`Error executing PUT /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `PUT /${req.params.id} - ${error.message}` });
       } else {
@@ -114,6 +120,7 @@ export const postRouter = (postService: PostService) => {
       await postService.delete(req.params.id);
       res.status(204).end();
     } catch (error) {
+      console.error(`Error executing DELETE /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `DELETE /${req.params.id} - ${error.message}` });
       } else {
