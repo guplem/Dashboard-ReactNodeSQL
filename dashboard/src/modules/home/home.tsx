@@ -1,13 +1,16 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+  const navigate = useNavigate();
+
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h5" component="div">
-          Home Page
-        </Typography>
-      </CardContent>
-    </Card>
+    <div>
+      <h1>Home</h1>
+
+      <Button variant="contained" color="primary" onClick={() => navigate("/api-test")}>
+        Go to API Test
+      </Button>
+    </div>
   );
 };

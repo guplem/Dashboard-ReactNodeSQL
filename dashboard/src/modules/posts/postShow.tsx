@@ -5,7 +5,7 @@ export const PostShow = () => (
     <SimpleShowLayout>
       <TextField source="title" />
       <RichTextField source="content" />
-      <DateField label="Publication date" source="published_at" />
+      <DateField label="Publication date" source="createdAt" />
     </SimpleShowLayout>
   </Show>
 );

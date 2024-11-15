@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, Button } from "@mui/material";
 // Enum for status
 enum Status {
   Pending = "Pending",
+  Ongoing = "Ongoing",
   Failed = "Failed",
   Success = "Success",
 }
@@ -14,7 +15,7 @@ export const ApiTest = () => {
 
   const fetchMessage = () => {
     const url: string = `${process.env.REACT_APP_API_URL}/health/hello-world`;
-    setStatus(Status.Pending);
+    setStatus(Status.Ongoing);
     // Fetching the message from the API
     fetch(url)
       .then((response) => response.json())
@@ -29,12 +30,15 @@ export const ApiTest = () => {
   };
 
   useEffect(() => {
-    fetchMessage();
+    // Disabled so it must be clicked to perform the test
+    // fetchMessage();
   }, []); // Empty dependency array means this only runs once after the first render
 
   const getStatusEmoji = (status: Status) => {
     switch (status) {
       case Status.Pending:
+        return "";
+      case Status.Ongoing:
         return "⏳";
       case Status.Failed:
         return "❌";
@@ -58,8 +62,8 @@ export const ApiTest = () => {
       <p>
         Status: {status} {getStatusEmoji(status)}
       </p>
-      <Button variant="contained" color="primary" onClick={fetchMessage} disabled={status === Status.Pending}>
-        Retry
+      <Button variant="contained" color="primary" onClick={fetchMessage} disabled={status === Status.Ongoing}>
+        {status === Status.Pending ? "Start 🚀" : "Retry"}
       </Button>
     </div>
   );
