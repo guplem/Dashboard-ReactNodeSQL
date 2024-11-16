@@ -27,6 +27,7 @@ model Post {
 enum ProjectType {
   RAG
   Chatbot
+  Converter
   Classifier
   RecommendationEngine
   Summarization
@@ -63,31 +64,19 @@ model Dataset {
   evaluations Evaluation[] @relation("DatasetEvaluations")
 }
 
-enum MetricType {
-  accuracy
-  relevancy
-  helpfulness
-  toxicity
-}
-
-model Metric {
-  id       Int         @id @default(autoincrement())
-  type     MetricType
-  score    Decimal     @default(0.0)
-  evaluations Evaluation[] @relation("MetricEvaluations")
-}
-
 model Evaluation {
   id        Int      @id @default(autoincrement())
   projectId Int
   systemId  Int
   datasetId Int
-  metricId  Int
   score     Decimal  @default(0.0)
+  accuracy  Decimal? 
+  relevancy Decimal?
+  helpfulness Decimal?
+  toxicity  Decimal?
   date      DateTime @default(now())
 
   project   Project  @relation("ProjectEvaluations", fields: [projectId], references: [id], onDelete: Cascade)
   system    System   @relation("SystemEvaluations", fields: [systemId], references: [id], onDelete: Cascade)
   dataset   Dataset  @relation("DatasetEvaluations", fields: [datasetId], references: [id], onDelete: Cascade)
-  metric    Metric   @relation("MetricEvaluations", fields: [metricId], references: [id], onDelete: Cascade)
 }
