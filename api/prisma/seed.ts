@@ -1,7 +1,7 @@
 // This file is used to seed the database with initial data.
 // https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
 
-import { MetricType, PrismaClient, ProjectType } from "@prisma/client";
+import { PrismaClient, ProjectType } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -196,6 +196,166 @@ async function main() {
   });
 
   // Evaluations
+
+  await prisma.evaluation.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      projectId: 1,
+      systemId: 1,
+      datasetId: 1,
+      accuracy: 0.9,
+      relevancy: 0.8,
+      helpfulness: 0.7,
+      toxicity: 0.1,
+      score: 0.8,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      id: 2,
+      projectId: 1,
+      systemId: 2,
+      datasetId: 1,
+      accuracy: 0.8,
+      relevancy: 0.7,
+      helpfulness: 0.6,
+      toxicity: 0.2,
+      score: 0.7,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
+      id: 3,
+      projectId: 1,
+      systemId: 3,
+      datasetId: 1,
+      accuracy: 0.9,
+      relevancy: 0.7,
+      helpfulness: 0.9,
+      toxicity: 0.1,
+      score: 0.8,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 4 },
+    update: {},
+    create: {
+      id: 4,
+      projectId: 1,
+      systemId: 3,
+      datasetId: 2,
+      accuracy: 0.9,
+      relevancy: 0.8,
+      helpfulness: 0.6,
+      toxicity: 0.2,
+      score: 0.8,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 5 },
+    update: {},
+    create: {
+      id: 5,
+      projectId: 2,
+      systemId: 4,
+      datasetId: 3,
+      accuracy: 0.9,
+      relevancy: 0.8,
+      helpfulness: 0.7,
+      toxicity: 0.1,
+      score: 0.8,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 6 },
+    update: {},
+    create: {
+      id: 6,
+      projectId: 2,
+      systemId: 5,
+      datasetId: 3,
+      accuracy: 0.8,
+      relevancy: 0.7,
+      helpfulness: 0.6,
+      toxicity: 0.2,
+      score: 0.7,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 7 },
+    update: {},
+    create: {
+      id: 7,
+      projectId: 2,
+      systemId: 6,
+      datasetId: 3,
+      accuracy: 0.9,
+      relevancy: 0.7,
+      helpfulness: 0.9,
+      toxicity: 0.1,
+      score: 0.8,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 8 },
+    update: {},
+    create: {
+      id: 8,
+      projectId: 2,
+      systemId: 7,
+      datasetId: 3,
+      accuracy: 0.9,
+      relevancy: 0.8,
+      helpfulness: 0.6,
+      toxicity: 0.2,
+      score: 0.8,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 9 },
+    update: {},
+    create: {
+      id: 9,
+      projectId: 3,
+      systemId: 8,
+      datasetId: 4,
+      accuracy: 0.9,
+      relevancy: 0.8,
+      helpfulness: 0.7,
+      toxicity: 0.1,
+      score: 0.8,
+    },
+  });
+
+  await prisma.evaluation.upsert({
+    where: { id: 10 },
+    update: {},
+    create: {
+      id: 10,
+      projectId: 3,
+      systemId: 9,
+      datasetId: 4,
+      accuracy: 0.8,
+      relevancy: 0.7,
+      helpfulness: 0.6,
+      toxicity: 0.2,
+      score: 0.7,
+    },
+  });
 }
 
 main()
