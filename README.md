@@ -1,33 +1,31 @@
 # Full Stack Application with React Admin, Node.js, MySQL, and Docker
 
-This repository contains a full stack application with three main components:
+This repository contains a full-stack application with three main components:
 
-- **Frontend**: A React Admin application powered by React.
-- **Backend**: A Node.js (Express) API serving data to the frontend.
-- **Database**: A MySQL database storing data that the backend API interacts with.
+- **Frontend**: A **React Admin** application powered by React.
+- **Backend**: A **Node.js (Express)** API serving data to the frontend.
+- **Database**: A **MySQL** database storing data that the backend API interacts with.
 
-All components are containerized using Docker, making it easy to run and share the application with just a single command.
-
-## Project Structure
-
-The following are the main directories and setup files in this project:
-
-Understood! Here’s the updated project structure without mentioning specific `.ts` files and with the same clean and consistent style:
+All components are containerized using Docker, making it easy to build, run, and share the application with minimal setup.
 
 ---
 
 ## Project Structure
 
-The following are the main directories and setup files in this project:
-
 ```
 Root/
  ├── dashboard/
- |    └── .env
+ |    ├── Dockerfile
+ |    ├── .env
+ |    ├── public/
+ |    └── src/
  ├── api/
- |    ├── prisma/
+ |    ├── Dockerfile
  |    ├── entrypoint.sh
  |    ├── .env
+ |    ├── prisma/
+ |    |    ├── schema.prisma
+ |    |    └── migrations/
  |    └── src/
  |         ├── application/
  |         │    └── services/
@@ -39,138 +37,136 @@ Root/
  |         │    └── http/
  |         └── tests/
  ├── database/
+ |    └── data/
  └── docker-compose.yml
 ```
 
-### Overview of Key Directories and Files
+### Key Components
 
-- **dashboard/**: Contains the **React Admin** frontend application built with TypeScript.
+- **dashboard/**: Contains the **React Admin** frontend application written in TypeScript and built for interacting with the backend API.
+  - Includes environment variables in `.env`.
+  - `Dockerfile` builds and runs the React Admin app within a container.
 
-- **api/**: Contains the **Express** API backend built with **Prisma** and TypeScript.
+- **api/**: Contains the **Express** backend API built with TypeScript, integrated with **Prisma** for database ORM.
+  - **prisma/**: Manages the Prisma schema, database migrations, and seed scripts.
+  - **entrypoint.sh**: Ensures that the database is ready, applies migrations, seeds the database, and starts the API.
+  - Includes environment variables in `.env`.
+  - `Dockerfile` builds and runs the API server within a container.
 
-  - **prisma/**: Contains the **Prisma** schema and migrations.
-  - **entrypoint.sh**: A shell script that performs database migrations and starts the API server.
-  - **.env**: Environment variables for the API service.
-  - **src/**:
-    - **application/**: Contains the business logic (use cases) that orchestrates interactions between the domain and infrastructure layers.
-      - **services/**: Contains business use cases that handle the core operations of the application.
-    - **domain/**: Defines the core business models and repository interfaces.
-      - **models/**: Contains domain entities, which represent the core data models of the application.
-      - **repositories/**: Contains repository interfaces that define methods for interacting with the data layer.
-    - **infrastructure/**: Contains concrete implementations for interacting with external systems, like databases or HTTP services.
-      - **repositories/**: Implements repository interfaces, interacting with the database or external services.
-      - **http/**: Contains the HTTP server setup, including route definitions and middlewares.
-    - **tests/**: Contains unit and integration tests for each layer of the application.
+- **database/**: Contains the **MySQL** database setup, with persistent data stored in the `data/` directory.
 
-- **database/**: Contains the **MySQL** database creation scripts (and, when running with the docker-compose, the database data).
+- **docker-compose.yml**: Defines services (`dashboard`, `api`, and `database`), their configurations, and how they connect within the `app-network`.
 
-- **docker-compose.yml**: Defines services for the frontend, backend, and database, making it easier to manage the development environment using Docker.
+---
 
 ## Prerequisites
 
-Before running the application, make sure you have the following installed:
+Before running the application, ensure you have the following installed:
 
 - [Git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
+---
+
 ## Getting Started
 
 ### 1. Clone the Repository
 
-Clone this repository to your local machine _(and navigate to the project folder)_:
+Clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/guplem/Dashboard-ReactNodeSQL.git
-cd full-stack-react-admin-node-mysql-docker
+cd Dashboard-ReactNodeSQL
 ```
 
-### 2. Build and Run with Docker Compose
+### 2. Build and Run the Application
 
-To build and start the project using Docker Compose, run the following command from the root directory of the project:
+Use Docker Compose to build and start the services:
 
 ```bash
 docker-compose up --build
 ```
 
-This command will:
+This will:
 
-- Build the Docker images for the frontend (`dashboard`), backend (`api`), and MySQL (`database`).
-- Start all containers in the background.
+- Build Docker images for the frontend (`dashboard`), backend (`api`), and database (`database`).
+- Start the containers in the background.
 
-### 3. Access the Application
+---
 
-Once the containers are up and running, you can access the following:
+## Accessing the Application
 
-- **Frontend (React Admin)**: Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to interact with the React Admin interface.
-- **Backend (Node.js API)**: The backend API is running on [http://localhost:3001](http://localhost:3001) and provides RESTful endpoints.
+- **Frontend**: Access the React Admin interface at [http://localhost:3000](http://localhost:3000).
+- **Backend**: The Express API is running at [http://localhost:3001](http://localhost:3001).
+- **Database**: MySQL is accessible on port `3306` (if needed for debugging or direct SQL access).
 
-### 4. Stop the Application
+---
 
-To stop the running containers, use the following command:
+## Stopping the Application
+
+To stop and remove all containers, use:
 
 ```bash
 docker-compose down
 ```
 
-This will stop and remove the containers, but it will keep your data in the MySQL container.
+---
 
 ## How It Works
 
 ### Frontend (React Admin)
 
-- The frontend uses **React Admin** to provide access to a dashboard interface.
-- It fetches data from the backend API on `http://api:3001`.
+- Built with **React Admin** to provide an interface for managing application data.
+- Communicates with the backend via RESTful API endpoints.
 
-### Backend (Node.js + Express)
+### Backend (Node.js + Prisma)
 
-- The backend is built with **Node.js** and **Express**.
-- It serves data from the **MySQL database** and exposes API endpoints that could perform CRUD operations.
-- The backend uses the **mysql2** package to connect to the MySQL database.
+- Built using **Express** with **TypeScript**.
+- Uses **Prisma** for database management and ORM.
+- Initializes the database using migrations and seeds data during container startup.
 
 ### Database (MySQL)
 
-- The MySQL service is configured using the official `mysql:8.0` Docker image.
-- The database is initialized using a custom SQL script located in `database/init.sql`, which creates the database.
+- Uses the official `mysql:8.0` Docker image.
+- Data is persisted in the `database/data` folder to retain information between container restarts.
 
-### Docker Setup
+---
 
-- The entire application is containerized using **Docker**.
-- The `docker-compose.yml` file defines three services: `dashboard`, `api`, and `database`.
-- The services are connected through a custom network called `app-network`, allowing the React app to communicate with the backend API and the API to communicate with the MySQL database.
+## Useful Commands
 
-## Docker Compose Commands
-
-- **Build and start the containers**:
-
-  ```bash
-  docker-compose up --build
-  ```
-
-- **Start containers without rebuilding**:
-
+- **Start the application**:  
   ```bash
   docker-compose up
   ```
 
-- **Stop and remove containers**:
-
-  ```bash
-  docker-compose down
-  ```
-
-- **View logs for all containers**:
-
-  ```bash
-  docker-compose logs
-  ```
-
-- **Rebuild containers** (useful if you've changed Dockerfiles or configurations):
+- **Rebuild containers**:  
   ```bash
   docker-compose up --build
   ```
 
+- **Stop the application**:  
+  ```bash
+  docker-compose down
+  ```
+
+- **View logs for all services**:  
+  ```bash
+  docker-compose logs
+  ```
+
+---
+
 ## Troubleshooting
 
-- If the frontend doesn't connect to the API, ensure that the backend (`api`) is running and accessible via the Docker network. Check the API endpoint and make sure it is exposed on the correct port (`3001`).
-- If there are issues with the MySQL database, ensure the database container has been properly initialized with the `init.sql` script.
+- **Frontend issues**:
+  - Ensure the `dashboard` container is running and properly built.
+  - Check the browser console for errors and confirm the API is reachable.
+
+- **Backend issues**:
+  - Ensure the `api` container is running and successfully applied Prisma migrations.
+  - Check the logs for errors using `docker-compose logs api`.
+
+- **Database issues**:
+  - Ensure the `database` container is running and accessible.
+  - Check if the persistent data directory (`database/data`) has proper read/write permissions.
