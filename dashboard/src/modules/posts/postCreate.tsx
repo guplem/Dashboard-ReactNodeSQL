@@ -1,4 +1,4 @@
-import { Create, SimpleForm, TextInput, DateInput, required, DateTimeInput } from "react-admin";
+import { Create, SimpleForm, TextInput, required, DateTimeInput } from "react-admin";
 import { RichTextInput } from "ra-input-rich-text";
 
 export const PostCreate = () => (
