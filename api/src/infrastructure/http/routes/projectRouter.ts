@@ -33,7 +33,7 @@ export const projectRouter = (projectService: ProjectService) => {
       const project = await projectService.getOne(req.params.id);
       res.json(project);
     } catch (error) {
-      console.error(`Error executing GET /${req.params.id}`, error);
+      console.error(`Error executing Project GET /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `GET /${req.params.id} - ${error.message}` });
       } else {
@@ -103,7 +103,7 @@ export const projectRouter = (projectService: ProjectService) => {
       const project = await projectService.update(req.params.id, req.body);
       res.json(project);
     } catch (error) {
-      console.error(`Error executing PUT /${req.params.id}`, error);
+      console.error(`Error executing Project PUT /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `PUT /${req.params.id} - ${error.message}` });
       } else {
@@ -120,7 +120,7 @@ export const projectRouter = (projectService: ProjectService) => {
       await projectService.delete(req.params.id);
       res.status(204).end();
     } catch (error) {
-      console.error(`Error executing DELETE /${req.params.id}`, error);
+      console.error(`Error executing Project DELETE /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `DELETE /${req.params.id} - ${error.message}` });
       } else {

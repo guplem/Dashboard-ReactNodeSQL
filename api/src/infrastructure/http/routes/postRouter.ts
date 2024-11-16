@@ -33,7 +33,7 @@ export const postRouter = (postService: PostService) => {
       const post = await postService.getOne(req.params.id);
       res.json(post);
     } catch (error) {
-      console.error(`Error executing GET /${req.params.id}`, error);
+      console.error(`Error executing Post GET /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `GET /${req.params.id} - ${error.message}` });
       } else {
@@ -103,7 +103,7 @@ export const postRouter = (postService: PostService) => {
       const post = await postService.update(req.params.id, req.body);
       res.json(post);
     } catch (error) {
-      console.error(`Error executing PUT /${req.params.id}`, error);
+      console.error(`Error executing Post PUT /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `PUT /${req.params.id} - ${error.message}` });
       } else {
@@ -120,7 +120,7 @@ export const postRouter = (postService: PostService) => {
       await postService.delete(req.params.id);
       res.status(204).end();
     } catch (error) {
-      console.error(`Error executing DELETE /${req.params.id}`, error);
+      console.error(`Error executing Post DELETE /${req.params.id}`, error);
       if (error instanceof Error) {
         res.status(500).json({ error: `DELETE /${req.params.id} - ${error.message}` });
       } else {
