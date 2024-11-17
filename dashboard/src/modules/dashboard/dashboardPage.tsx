@@ -60,8 +60,8 @@ export const DashboardPage = () => {
 
   // Prepare data for the BarChart
   const chartData = data.map((project) => ({
-    Name: project.name,
-    Progress: project.conformityProgress * 100, // Convert to percentage
+    name: project.name,
+    progress: project.conformityProgress * 100, // Convert to percentage
   }));
 
   return (
@@ -82,7 +82,7 @@ export const DashboardPage = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Name" />
+          <XAxis dataKey="name" />
           <YAxis />
           <Tooltip
             cursor={false}
@@ -91,7 +91,7 @@ export const DashboardPage = () => {
             formatter={(value) => [`${value}%`, "Progress"]}
             contentStyle={{ backgroundColor: theme.palette.background.paper, borderColor: theme.palette.divider }}
           />
-          <Bar dataKey="Progress" fill={theme.palette.primary.main} onClick={() => navigate("/api-test")} />
+          <Bar dataKey="progress" fill={theme.palette.primary.main} onClick={() => navigate("/api-test")} />
         </BarChart>
       </ResponsiveContainer>
 
