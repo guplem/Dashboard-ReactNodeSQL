@@ -1,4 +1,4 @@
-import { Show, SimpleShowLayout, TextField, DateField, RichTextField, ChipField, NumberField } from "react-admin";
+import { Show, SimpleShowLayout, TextField, ChipField, NumberField } from "react-admin";
 
 export const ProjectShow = () => (
   <Show>

@@ -1,5 +1,4 @@
-import { Show, SimpleShowLayout, TextField, DateField, RichTextField, ChipField, NumberField } from "react-admin";
-import { Box } from "@mui/material";
+import { Show, SimpleShowLayout, TextField, DateField, NumberField } from "react-admin";
 
 export const EvaluationShow = () => (
   <Show>

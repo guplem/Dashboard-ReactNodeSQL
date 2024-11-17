@@ -1,6 +1,4 @@
-import { RichTextInput } from "ra-input-rich-text";
-import { Edit, SimpleForm, TextInput, required, DateTimeInput, SelectInput, NumberInput } from "react-admin";
-import { evaluationTypesSelector } from "./evaluationTypes";
+import { Edit, SimpleForm, TextInput, required, DateTimeInput, NumberInput } from "react-admin";
 
 export const EvaluationEdit = () => (
   <Edit>

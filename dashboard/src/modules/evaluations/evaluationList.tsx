@@ -1,4 +1,4 @@
-import { List, Datagrid, TextField, DateField, RichTextField, NumberField, ChipField } from "react-admin";
+import { List, Datagrid, TextField, DateField, NumberField, ChipField } from "react-admin";
 
 export const EvaluationList = () => (
   <List>

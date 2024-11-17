@@ -1,5 +1,4 @@
-import { RichTextInput } from "ra-input-rich-text";
-import { Edit, SimpleForm, TextInput, required, DateTimeInput, SelectInput, NumberInput } from "react-admin";
+import { Edit, SimpleForm, TextInput, required, SelectInput, NumberInput } from "react-admin";
 import { projectTypesSelector } from "./projectTypes";
 
 export const ProjectEdit = () => (
