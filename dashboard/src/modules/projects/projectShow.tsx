@@ -53,11 +53,17 @@ export const ProjectShow = () => {
       <Typography variant="h6" sx={{ margin: 2 }}>
         Evaluations of the project
       </Typography>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
         {evaluations.map((evaluation) => (
           <Card
             key={evaluation.id}
-            sx={{ minWidth: 150, cursor: 'pointer' }}
+            sx={{
+              minWidth: 150,
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "action.hover",
+              },
+            }}
             onClick={() => navigate(`/Evaluations/${evaluation.id}/show`)}
           >
             <CardContent>
