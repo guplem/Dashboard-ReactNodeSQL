@@ -2,6 +2,7 @@ import { Show, SimpleShowLayout, TextField, ChipField, NumberField, useGetList }
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Button } from "@mui/material";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
+import { useState } from "react";
 
 interface Evaluation {
   id: number;
@@ -23,9 +24,10 @@ export const ProjectShow = () => {
   const navigate = useNavigate();
 
   const { projectId } = useParams();
+  const [page, setPage] = useState(1);
 
   const { data, error, isPending, refetch } = useGetList<Evaluation>("evaluations", {
-    pagination: { page: 1, perPage: 10 },
+    pagination: { page: page, perPage: 2 },
     sort: { field: "score", order: "DESC" },
     filter: { projectId: projectId },
   });
@@ -39,6 +41,14 @@ export const ProjectShow = () => {
         systemName: evaluation.system.name,
         datasetName: evaluation.dataset.name,
       }));
+
+  const handleSeeMore = () => {
+    setPage((prevPage) => {
+      const newPage = prevPage + 1;
+      refetch();
+      return newPage;
+    });
+  };
 
   return (
     <>
@@ -77,6 +87,12 @@ export const ProjectShow = () => {
             </CardContent>
           </Card>
         ))}
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "center", margin: 2 }}>
+        <Button variant="contained" color="primary" onClick={handleSeeMore}>
+          See More
+        </Button>
       </Box>
 
       <RefreshButton refetch={refetch} navigate={navigate} />
