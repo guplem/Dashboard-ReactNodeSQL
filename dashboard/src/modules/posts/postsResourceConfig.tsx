@@ -1,4 +1,4 @@
-import PostIcon from "@mui/icons-material/Book";
+import Icon from "@mui/icons-material/Book";
 
 import { PostList } from "./postList";
 import { PostCreate } from "./postCreate";
@@ -9,7 +9,7 @@ export const PostsResourceConfig = {
   name: "Posts",
   options: { label: "Posts Demo" },
   recordRepresentation: (record: any) => ` - ${record.title}`,
-  icon: PostIcon,
+  icon: Icon,
   list: PostList,
   create: PostCreate,
   edit: PostEdit,
