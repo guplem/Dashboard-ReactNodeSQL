@@ -1,4 +1,7 @@
+import { Dataset } from "../../domain/models/dataset";
 import { Evaluation } from "../../domain/models/evaluation";
+import { Project } from "../../domain/models/project";
+import { System } from "../../domain/models/system";
 import { EvaluationRepository } from "../../domain/repositories/evaluationRepository";
 import { PrismaClient } from "@prisma/client";
 
@@ -22,82 +25,55 @@ export class PrismaEvaluationRepository implements EvaluationRepository {
       orderBy: orderBy,
       skip: range[0],
       take: range[1] - range[0] + 1,
+      include: {
+        project: true,
+        dataset: true,
+        system: true,
+      },
     });
 
     const total = await prisma.evaluation.count({ where: filter });
     return {
-      evaluations: evaluations.map(
-        (evaluation) =>
-          new Evaluation(
-            evaluation.id,
-            evaluation.projectId,
-            evaluation.systemId,
-            evaluation.datasetId,
-            Number(evaluation.score),
-            Number(evaluation.accuracy),
-            Number(evaluation.relevancy),
-            Number(evaluation.helpfulness),
-            Number(evaluation.toxicity),
-            evaluation.date
-          )
-      ),
+      evaluations: evaluations.map((evaluation) => Evaluation.fromMap(evaluation)),
       total,
     };
   }
 
   async getOne(id: number): Promise<Evaluation> {
-    const evaluation = await prisma.evaluation.findUnique({ where: { id } });
+    const evaluation = await prisma.evaluation.findUnique({
+      where: { id },
+      include: {
+        project: true,
+        dataset: true,
+        system: true,
+      },
+    });
     if (!evaluation) throw new Error("Evaluation not found");
-    return new Evaluation(
-      evaluation.id,
-      evaluation.projectId,
-      evaluation.systemId,
-      evaluation.datasetId,
-      Number(evaluation.score),
-      Number(evaluation.accuracy),
-      Number(evaluation.relevancy),
-      Number(evaluation.helpfulness),
-      Number(evaluation.toxicity),
-      evaluation.date
-    );
+    return Evaluation.fromMap(evaluation);
   }
 
   async getMany(filter: { [key: string]: any }): Promise<Evaluation[]> {
-    const evaluations = await prisma.evaluation.findMany({ where: filter });
-    return evaluations.map(
-      (evaluation) =>
-        new Evaluation(
-          evaluation.id,
-          evaluation.projectId,
-          evaluation.systemId,
-          evaluation.datasetId,
-          Number(evaluation.score),
-          Number(evaluation.accuracy),
-          Number(evaluation.relevancy),
-          Number(evaluation.helpfulness),
-          Number(evaluation.toxicity),
-          evaluation.date
-        )
-    );
+    const evaluations = await prisma.evaluation.findMany({
+      where: filter,
+      include: {
+        project: true,
+        dataset: true,
+        system: true,
+      },
+    });
+    return evaluations.map((evaluation) => Evaluation.fromMap(evaluation));
   }
 
   async getManyReference(filter: { [key: string]: any }): Promise<Evaluation[]> {
-    const evaluations = await prisma.evaluation.findMany({ where: filter });
-    return evaluations.map(
-      (evaluation) =>
-        new Evaluation(
-          evaluation.id,
-          evaluation.projectId,
-          evaluation.systemId,
-          evaluation.datasetId,
-          Number(evaluation.score),
-          Number(evaluation.accuracy),
-          Number(evaluation.relevancy),
-          Number(evaluation.helpfulness),
-          Number(evaluation.toxicity),
-          evaluation.date
-        )
-    );
+    const evaluations = await prisma.evaluation.findMany({
+      where: filter,
+      include: {
+        project: true,
+        dataset: true,
+        system: true,
+      },
+    });
+    return evaluations.map((evaluation) => Evaluation.fromMap(evaluation));
   }
 
   async create(evaluation: Evaluation): Promise<Evaluation> {
@@ -115,18 +91,7 @@ export class PrismaEvaluationRepository implements EvaluationRepository {
         date: evaluation.date,
       },
     });
-    return new Evaluation(
-      createdEvaluation.id,
-      createdEvaluation.projectId,
-      createdEvaluation.systemId,
-      createdEvaluation.datasetId,
-      Number(evaluation.score),
-      Number(evaluation.accuracy),
-      Number(evaluation.relevancy),
-      Number(evaluation.helpfulness),
-      Number(evaluation.toxicity),
-      createdEvaluation.date
-    );
+    return Evaluation.fromMap(createdEvaluation);
   }
 
   async update(id: number, evaluation: Evaluation): Promise<Evaluation> {
@@ -144,18 +109,7 @@ export class PrismaEvaluationRepository implements EvaluationRepository {
         date: evaluation.date,
       },
     });
-    return new Evaluation(
-      updatedEvaluation.id,
-      updatedEvaluation.projectId,
-      updatedEvaluation.systemId,
-      updatedEvaluation.datasetId,
-      Number(evaluation.score),
-      Number(evaluation.accuracy),
-      Number(evaluation.relevancy),
-      Number(evaluation.helpfulness),
-      Number(evaluation.toxicity),
-      updatedEvaluation.date
-    );
+    return Evaluation.fromMap(updatedEvaluation);
   }
 
   async delete(id: number): Promise<void> {

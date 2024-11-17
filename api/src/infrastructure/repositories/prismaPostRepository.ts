@@ -25,23 +25,23 @@ export class PrismaPostRepository implements PostRepository {
     });
 
     const total = await prisma.post.count({ where: filter });
-    return { posts: posts.map((post) => new Post(post.id, post.title, post.content, post.createdAt)), total };
+    return { posts: posts.map((post) => Post.fromMap(post)), total };
   }
 
   async getOne(id: number): Promise<Post> {
     const post = await prisma.post.findUnique({ where: { id } });
     if (!post) throw new Error("Post not found");
-    return new Post(post.id, post.title, post.content, post.createdAt);
+    return Post.fromMap(post);
   }
 
   async getMany(filter: { [key: string]: any }): Promise<Post[]> {
     const posts = await prisma.post.findMany({ where: filter });
-    return posts.map((post) => new Post(post.id, post.title, post.content, post.createdAt));
+    return posts.map((post) => Post.fromMap(post));
   }
 
   async getManyReference(filter: { [key: string]: any }): Promise<Post[]> {
     const posts = await prisma.post.findMany({ where: filter });
-    return posts.map((post) => new Post(post.id, post.title, post.content, post.createdAt));
+    return posts.map((post) => Post.fromMap(post));
   }
 
   async create(post: Post): Promise<Post> {
@@ -51,7 +51,7 @@ export class PrismaPostRepository implements PostRepository {
         content: post.content,
       },
     });
-    return new Post(createdPost.id, createdPost.title, createdPost.content, createdPost.createdAt);
+    return Post.fromMap(createdPost);
   }
 
   async update(id: number, post: Post): Promise<Post> {
@@ -62,7 +62,7 @@ export class PrismaPostRepository implements PostRepository {
         content: post.content,
       },
     });
-    return new Post(updatedPost.id, updatedPost.title, updatedPost.content, updatedPost.createdAt);
+    return Post.fromMap(updatedPost);
   }
 
   async delete(id: number): Promise<void> {

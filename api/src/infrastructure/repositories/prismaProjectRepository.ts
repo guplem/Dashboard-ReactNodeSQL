@@ -25,23 +25,23 @@ export class PrismaProjectRepository implements ProjectRepository {
     });
 
     const total = await prisma.project.count({ where: filter });
-    return { projects: projects.map((project) => new Project(project.id, project.name, project.type, Number(project.conformityProgress))), total };
+    return { projects: projects.map((project) => Project.fromMap(project)), total };
   }
 
   async getOne(id: number): Promise<Project> {
     const project = await prisma.project.findUnique({ where: { id } });
     if (!project) throw new Error("Project not found");
-    return new Project(project.id, project.name, project.type, Number(project.conformityProgress));
+    return Project.fromMap(project);
   }
 
   async getMany(filter: { [key: string]: any }): Promise<Project[]> {
     const projects = await prisma.project.findMany({ where: filter });
-    return projects.map((project) => new Project(project.id, project.name, project.type, Number(project.conformityProgress)));
+    return projects.map((project) => Project.fromMap(project));
   }
 
   async getManyReference(filter: { [key: string]: any }): Promise<Project[]> {
     const projects = await prisma.project.findMany({ where: filter });
-    return projects.map((project) => new Project(project.id, project.name, project.type, Number(project.conformityProgress)));
+    return projects.map((project) => Project.fromMap(project));
   }
 
   async create(project: Project): Promise<Project> {
@@ -52,7 +52,7 @@ export class PrismaProjectRepository implements ProjectRepository {
         conformityProgress: project.conformityProgress,
       },
     });
-    return new Project(createdProject.id, createdProject.name, createdProject.type, Number(createdProject.conformityProgress));
+    return Project.fromMap(createdProject);
   }
 
   async update(id: number, project: Project): Promise<Project> {
@@ -64,7 +64,7 @@ export class PrismaProjectRepository implements ProjectRepository {
         conformityProgress: project.conformityProgress,
       },
     });
-    return new Project(updatedProject.id, updatedProject.name, updatedProject.type, Number(updatedProject.conformityProgress));
+    return Project.fromMap(updatedProject);
   }
 
   async delete(id: number): Promise<void> {
