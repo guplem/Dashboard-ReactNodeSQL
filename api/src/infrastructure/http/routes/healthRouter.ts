@@ -1,6 +1,6 @@
 import express from "express";
 
-export const healthRouter = () => {
+export const HealthRouter = () => {
   const router = express.Router();
 
   // Simple health check to make sure the API is running

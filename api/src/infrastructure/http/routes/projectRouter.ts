@@ -1,7 +1,7 @@
 import express from "express";
 import { ProjectService } from "../../../application/services/projectService";
 
-export const projectRouter = (projectService: ProjectService) => {
+export const ProjectRouter = (projectService: ProjectService) => {
   const router = express.Router();
 
   /**

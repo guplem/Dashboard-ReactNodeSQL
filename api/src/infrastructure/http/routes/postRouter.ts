@@ -1,7 +1,7 @@
 import express from "express";
 import { PostService } from "../../../application/services/postService";
 
-export const postRouter = (postService: PostService) => {
+export const PostRouter = (postService: PostService) => {
   const router = express.Router();
 
   /**
