@@ -4,6 +4,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useDataProvider } from "react-admin";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from "recharts";
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
+import { useTheme } from "@mui/material/styles";
 
 interface Project {
   id: number;
@@ -25,6 +26,7 @@ const RefreshButton = ({ refetch, navigate }: { refetch: () => void; navigate: N
 
 export const DashboardPage = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const { data, error, isPending, refetch } = useGetList<Project>("projects", {
     pagination: { page: 1, perPage: 10 },
@@ -82,8 +84,14 @@ export const DashboardPage = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Name" />
           <YAxis />
-          <Tooltip cursor={false} labelFormatter={(value) => `Project: ${value}`} labelStyle={{ color: "black" }} formatter={(value) => `${value}%`} />
-          <Bar dataKey="Progress" fill="#8884d8" onClick={() => navigate("/api-test")} />
+          <Tooltip
+            cursor={false}
+            labelFormatter={(value) => `Project: ${value}`}
+            labelStyle={{ color: theme.palette.text.primary }}
+            formatter={(value) => [`${value}%`, "Progress"]}
+            contentStyle={{ backgroundColor: theme.palette.background.paper, borderColor: theme.palette.divider }}
+          />
+          <Bar dataKey="Progress" fill={theme.palette.primary.main} onClick={() => navigate("/api-test")} />
         </BarChart>
       </ResponsiveContainer>
 
