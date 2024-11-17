@@ -1,4 +1,4 @@
-import { Show, SimpleShowLayout, TextField, ChipField, NumberField, useGetList } from "react-admin";
+import { Show, SimpleShowLayout, TextField, ChipField, NumberField, useInfiniteGetList } from "react-admin";
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Button } from "@mui/material";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -13,41 +13,13 @@ interface Evaluation {
 
 export const ProjectShow = () => {
   const navigate = useNavigate();
-
   const { projectId } = useParams();
-  const [page, setPage] = useState(1);
-  const [evaluationsMap, setEvaluationsMap] = useState<Map<number, Evaluation>>(new Map());
 
-  const { data, error, isPending, refetch } = useGetList<Evaluation>("evaluations", {
-    pagination: { page: page, perPage: 2 },
+  const { data, error, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteGetList<Evaluation>("evaluations", {
+    pagination: { page: 1, perPage: 10 },
     sort: { field: "score", order: "DESC" },
     filter: { projectId: projectId },
   });
-
-  useEffect(() => {
-    if (data) {
-      setEvaluationsMap((prevMap) => {
-        const newMap = new Map(prevMap);
-        data.forEach((evaluation) => {
-          newMap.set(evaluation.id, {
-            id: evaluation.id,
-            score: evaluation.score,
-            system: evaluation.system,
-            dataset: evaluation.dataset,
-          });
-        });
-        return newMap;
-      });
-    }
-  }, [data]);
-
-  const handleSeeMore = () => {
-    setPage((prevPage) => {
-      const newPage = prevPage + 1;
-      refetch();
-      return newPage;
-    });
-  };
 
   return (
     <>
@@ -63,9 +35,8 @@ export const ProjectShow = () => {
         Evaluations of the project
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-        {Array.from(evaluationsMap.values())
-          .sort((a, b) => b.score - a.score)
-          .map((evaluation) => (
+        {data?.pages.map((page) =>
+          page.data.map((evaluation) => (
             <Card
               key={evaluation.id}
               sx={{
@@ -87,14 +58,19 @@ export const ProjectShow = () => {
                 </Typography>
               </CardContent>
             </Card>
-          ))}
+          ))
+        )}
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center", margin: 2 }}>
-        <Button variant="text" color="primary" onClick={handleSeeMore}>
-          See More ({evaluationsMap.size}/{!data ? -1 : "totalNumberElements"})
-        </Button>
-      </Box>
+      {hasNextPage && (
+        <Box sx={{ display: "flex", justifyContent: "center", margin: 2 }}>
+          <Button variant="text" color="primary" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+            See More
+          </Button>
+        </Box>
+      )}
+
+      <br />
     </>
   );
 };
