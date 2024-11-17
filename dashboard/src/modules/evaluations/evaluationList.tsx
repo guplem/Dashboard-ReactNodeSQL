@@ -1,17 +1,18 @@
-import { List, Datagrid, TextField, DateField, NumberField } from "react-admin";
+import { List, Datagrid, TextField, DateField } from "react-admin";
+import { PercentageField } from "../../utils/components/percentageField";
 
 export const EvaluationList = () => (
   <List>
     <Datagrid>
-      <TextField source="id" />
+      {/* <TextField source="id" /> */}
       <TextField source="project.name" />
       <TextField source="system.name" />
       <TextField source="dataset.name" />
-      <NumberField source="score" />
-      <NumberField source="accuracy" />
-      <NumberField source="helpfulness" />
-      <NumberField source="relevancy" />
-      <NumberField source="toxicity" />
+      <PercentageField source="score" decimalPlaces={1} />
+      <PercentageField source="accuracy" decimalPlaces={0} />
+      <PercentageField source="helpfulness" decimalPlaces={0} />
+      <PercentageField source="relevancy" decimalPlaces={0} />
+      <PercentageField source="toxicity" decimalPlaces={0} />
       <DateField source="date" />
     </Datagrid>
   </List>

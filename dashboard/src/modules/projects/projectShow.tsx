@@ -1,8 +1,8 @@
-import { Show, SimpleShowLayout, TextField, ChipField, NumberField, useInfiniteGetList } from "react-admin";
-import { Card, CardContent, Typography, List, ListItem, ListItemText, Button } from "@mui/material";
-import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
+import { Show, SimpleShowLayout, TextField, ChipField, useInfiniteGetList } from "react-admin";
+import { Card, CardContent, Typography, Button } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
-import { useState, useEffect } from "react";
+import { PercentageField } from "../../utils/components/percentageField";
 
 interface Evaluation {
   id: number;
@@ -27,7 +27,7 @@ export const ProjectShow = () => {
         <SimpleShowLayout>
           <TextField source="name" />
           <ChipField source="type" />
-          <NumberField source="conformityProgress" />
+          <PercentageField source="conformityProgress" />
         </SimpleShowLayout>
       </Show>
 

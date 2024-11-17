@@ -1,4 +1,5 @@
-import { Show, SimpleShowLayout, TextField, DateField, NumberField } from "react-admin";
+import { Show, SimpleShowLayout, TextField, DateField } from "react-admin";
+import { PercentageField } from "../../utils/components/percentageField";
 
 export const EvaluationShow = () => (
   <Show>
@@ -7,11 +8,11 @@ export const EvaluationShow = () => (
       <TextField source="project.name" />
       <TextField source="system.name" />
       <TextField source="dataset.name" />
-      <NumberField source="score" />
-      <NumberField source="accuracy" />
-      <NumberField source="helpfulness" />
-      <NumberField source="relevancy" />
-      <NumberField source="toxicity" />
+      <PercentageField source="score" />
+      <PercentageField source="accuracy" />
+      <PercentageField source="helpfulness" />
+      <PercentageField source="relevancy" />
+      <PercentageField source="toxicity" />
       <DateField source="date" />
     </SimpleShowLayout>
   </Show>

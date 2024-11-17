@@ -1,12 +1,13 @@
-import { List, Datagrid, TextField, NumberField, ChipField, Link, useRecordContext } from "react-admin";
+import { List, Datagrid, TextField, ChipField } from "react-admin";
+import { PercentageField } from "../../utils/components/percentageField";
 
 export const ProjectList = () => (
   <List>
     <Datagrid>
-      <TextField source="id" />
+      {/* <TextField source="id" /> */}
       <TextField source="name" />
       <ChipField source="type" />
-      <NumberField source="conformityProgress" />
+      <PercentageField source="conformityProgress" decimalPlaces={1} />
     </Datagrid>
   </List>
 );
