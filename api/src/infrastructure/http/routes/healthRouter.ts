@@ -8,6 +8,7 @@ export const HealthRouter = () => {
     try {
       res.json({ message: "Hello World!" });
     } catch (error) {
+      console.error("Error in /hello-world", error);
       res.status(500).json({ error: "Something went wrong" });
     }
   });

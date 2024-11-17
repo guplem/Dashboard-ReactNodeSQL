@@ -26,8 +26,6 @@ const RefreshButton = ({ refetch, navigate }: { refetch: () => void; navigate: N
 export const DashboardPage = () => {
   const navigate = useNavigate();
 
-  const dataProvider = useDataProvider();
-
   const { data, error, isPending, refetch } = useGetList<Project>("projects", {
     pagination: { page: 1, perPage: 10 },
     sort: { field: "conformityProgress", order: "DESC" },

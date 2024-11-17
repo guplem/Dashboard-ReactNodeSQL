@@ -38,7 +38,6 @@ app.use("/health", HealthRouter());
 app.use("/posts", PostRouter(postService));
 app.use("/projects", ProjectRouter(projectService));
 app.use("/evaluations", EvaluationRouter(evaluationService));
-// app.use("/projects/:id/evaluations", projetEvaluationRouter(evaluationService));
 
 app.listen(8080, () => {
   console.log("\nAPI is running! 🚀");
