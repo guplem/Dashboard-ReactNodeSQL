@@ -57,7 +57,6 @@ export const EvaluationShow = () => {
           style={{
             flex: "0 1 600px",
             maxWidth: "600px",
-            marginLeft: "20px",
             minWidth: "40%",
           }}
         >

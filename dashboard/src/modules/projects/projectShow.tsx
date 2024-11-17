@@ -1,4 +1,4 @@
-import { Show, SimpleShowLayout, TextField, ChipField, useInfiniteGetList } from "react-admin";
+import { Show, SimpleShowLayout, TextField, ChipField, useInfiniteGetList, useShowController } from "react-admin";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -37,7 +37,7 @@ const needle = (value: number, data: any[], cx: number, cy: number, iR: number, 
   return [<circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />, <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />];
 };
 
-const PieChartWithNeedle = ({ score }: { score: number }) => {
+const PieChartWithNeedle = ({ score, width = 150 }: { score: number; width?: number }) => {
   const theme = useTheme();
   const data = [
     { name: "0-25%", value: 25 },
@@ -45,15 +45,15 @@ const PieChartWithNeedle = ({ score }: { score: number }) => {
     { name: "50-75%", value: 25 },
     { name: "75-100%", value: 25 },
   ];
-  const cx = 75;
-  const cy = 75;
-  const iR = 30;
-  const oR = 60;
+  const cx = width / 2;
+  const cy = width / 2;
+  const iR = width / 5;
+  const oR = width / 2.5;
   const value = score;
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <PieChart width={150} height={95}>
+      <PieChart width={width} height={width / 1.6}>
         <Pie dataKey="value" startAngle={180} endAngle={0} data={data} cx={cx} cy={cy} innerRadius={iR} outerRadius={oR} fill="#8884d8" stroke="none">
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={index === 0 ? theme.palette.error.main : index === 1 ? theme.palette.warning.main : index === 2 ? "#FFFF00" : "#00C49F"} />
@@ -70,6 +70,8 @@ export const ProjectShow = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const { record } = useShowController();
+
   const { data, error, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteGetList<Evaluation>("evaluations", {
     pagination: { page: 1, perPage: 10 },
     sort: { field: "score", order: "DESC" },
@@ -78,13 +80,37 @@ export const ProjectShow = () => {
 
   return (
     <>
-      <Show>
-        <SimpleShowLayout>
-          <TextField source="name" />
-          <ChipField source="type" />
-          <PercentageField source="conformityProgress" />
-        </SimpleShowLayout>
-      </Show>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <div style={{ flex: "1 1 auto", minWidth: "40%" }}>
+          <Show>
+            <SimpleShowLayout>
+              <TextField source="name" />
+              <ChipField source="type" />
+              <PercentageField source="conformityProgress" />
+            </SimpleShowLayout>
+          </Show>
+        </div>
+        <div
+          style={{
+            flex: "0 1 600px",
+            maxWidth: "600px",
+            minWidth: "40%",
+            marginTop: 25,
+            
+          }}
+        >
+          {/* Here a Pie chart with needle showing the conformityProgres of the resource*/}
+          <PieChartWithNeedle score={(record?.conformityProgress ?? 0) * 100} width={300} />
+        </div>
+      </div>
 
       <Typography variant="h6" sx={{ margin: 2, textAlign: "center" }}>
         Evaluations of the project
