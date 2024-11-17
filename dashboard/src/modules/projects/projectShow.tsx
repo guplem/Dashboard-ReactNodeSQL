@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 import { PercentageField } from "../../utils/components/percentageField";
 import { PieChart, Pie, Cell } from "recharts";
+import { useTheme } from "@mui/material/styles";
 
 interface Evaluation {
   id: number;
@@ -37,6 +38,7 @@ const needle = (value: number, data: any[], cx: number, cy: number, iR: number, 
 };
 
 const PieChartWithNeedle = ({ score }: { score: number }) => {
+  const theme = useTheme();
   const data = [
     { name: "0-25%", value: 25 },
     { name: "25-50%", value: 25 },
@@ -54,10 +56,10 @@ const PieChartWithNeedle = ({ score }: { score: number }) => {
       <PieChart width={150} height={95}>
         <Pie dataKey="value" startAngle={180} endAngle={0} data={data} cx={cx} cy={cy} innerRadius={iR} outerRadius={oR} fill="#8884d8" stroke="none">
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={index === 0 ? "#FF0000" : index === 1 ? "#FFA500" : index === 2 ? "#FFFF00" : "#00C49F"} />
+            <Cell key={`cell-${index}`} fill={index === 0 ? theme.palette.error.main : index === 1 ? theme.palette.warning.main : index === 2 ? "#FFFF00" : "#00C49F"} />
           ))}
         </Pie>
-        {needle(value, data, cx, cy, iR, oR, "#d0d000")}
+        {needle(value, data, cx, cy, iR, oR, "#a0a000")}
       </PieChart>
       <Typography variant="h6">{score}%</Typography>
     </Box>
