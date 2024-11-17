@@ -98,7 +98,7 @@ export const ProjectShow = () => {
                 minWidth: 150,
                 cursor: "pointer",
                 "&:hover": {
-                  backgroundColor: "action.hover",
+                  backgroundColor: (theme) => theme.palette.action.hover,
                 },
               }}
               onClick={() => navigate(`/evaluations/${evaluation.id}/show`)}
