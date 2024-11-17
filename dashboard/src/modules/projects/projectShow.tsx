@@ -2,7 +2,7 @@ import { Show, SimpleShowLayout, TextField, ChipField, NumberField, useGetList }
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Button } from "@mui/material";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Evaluation {
   id: number;
@@ -11,20 +11,12 @@ interface Evaluation {
   dataset: { name: string };
 }
 
-const RefreshButton = ({ refetch, navigate }: { refetch: () => void; navigate: NavigateFunction }) => (
-  <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-    {/* This makes the button only take as much space as needed */}
-    <Button variant="contained" color="primary" onClick={refetch}>
-      Refresh
-    </Button>
-  </div>
-);
-
 export const ProjectShow = () => {
   const navigate = useNavigate();
 
   const { projectId } = useParams();
   const [page, setPage] = useState(1);
+  const [evaluationsMap, setEvaluationsMap] = useState<Map<number, Evaluation>>(new Map());
 
   const { data, error, isPending, refetch } = useGetList<Evaluation>("evaluations", {
     pagination: { page: page, perPage: 2 },
@@ -32,15 +24,22 @@ export const ProjectShow = () => {
     filter: { projectId: projectId },
   });
 
-  // Prepare evaluations' data
-  const evaluations = !data
-    ? []
-    : data.map((evaluation) => ({
-        id: evaluation.id,
-        score: evaluation.score * 100, // Convert to percentage
-        systemName: evaluation.system.name,
-        datasetName: evaluation.dataset.name,
-      }));
+  useEffect(() => {
+    if (data) {
+      setEvaluationsMap((prevMap) => {
+        const newMap = new Map(prevMap);
+        data.forEach((evaluation) => {
+          newMap.set(evaluation.id, {
+            id: evaluation.id,
+            score: evaluation.score,
+            system: evaluation.system,
+            dataset: evaluation.dataset,
+          });
+        });
+        return newMap;
+      });
+    }
+  }, [data]);
 
   const handleSeeMore = () => {
     setPage((prevPage) => {
@@ -64,38 +63,38 @@ export const ProjectShow = () => {
         Evaluations of the project
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-        {evaluations.map((evaluation) => (
-          <Card
-            key={evaluation.id}
-            sx={{
-              minWidth: 150,
-              cursor: "pointer",
-              "&:hover": {
-                backgroundColor: "action.hover",
-              },
-            }}
-            onClick={() => navigate(`/Evaluations/${evaluation.id}/show`)}
-          >
-            <CardContent>
-              <Typography variant="h6">{evaluation.score}%</Typography>
-              <Typography variant="body2" color="textSecondary">
-                System: {evaluation.systemName}
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                Dataset: {evaluation.datasetName}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+        {Array.from(evaluationsMap.values())
+          .sort((a, b) => b.score - a.score)
+          .map((evaluation) => (
+            <Card
+              key={evaluation.id}
+              sx={{
+                minWidth: 150,
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: "action.hover",
+                },
+              }}
+              onClick={() => navigate(`/Evaluations/${evaluation.id}/show`)}
+            >
+              <CardContent>
+                <Typography variant="h6">{evaluation.score}%</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  System: {evaluation.system.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Dataset: {evaluation.dataset.name}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center", margin: 2 }}>
-        <Button variant="contained" color="primary" onClick={handleSeeMore}>
-          See More
+        <Button variant="text" color="primary" onClick={handleSeeMore}>
+          See More ({evaluationsMap.size}/{!data ? -1 : "totalNumberElements"})
         </Button>
       </Box>
-
-      <RefreshButton refetch={refetch} navigate={navigate} />
     </>
   );
 };
