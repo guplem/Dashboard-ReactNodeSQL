@@ -13,9 +13,8 @@ interface Project {
 }
 
 const RefreshButton = ({ refetch, navigate }: { refetch: () => void; navigate: NavigateFunction }) => (
-  <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-    {/* This makes the button only take as much space as needed */}
-    <Button variant="contained" color="primary" onClick={refetch}>
+  <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", position: "absolute", bottom: "20px", right: "20px" }}>
+    <Button variant="outlined" color="primary" onClick={refetch}>
       Refresh
     </Button>
     <Button variant="text" color="primary" onClick={() => navigate("/api-test")}>
