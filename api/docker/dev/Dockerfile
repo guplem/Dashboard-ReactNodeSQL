@@ -31,7 +31,7 @@ RUN chmod +x ./entrypoint.sh
 COPY . .
 
 # Expose the port that the API will run on
-EXPOSE 3001
+EXPOSE 8080
 
 # Set the entrypoint to your custom entrypoint script
 ENTRYPOINT ["bash", "./entrypoint.sh"]

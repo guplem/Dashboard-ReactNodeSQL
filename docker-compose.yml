@@ -2,8 +2,9 @@ services:
   dashboard:
     build:
       context: ./dashboard
+      dockerfile: docker/dev/Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:8080"
     env_file:
       - ./dashboard/.env
     volumes:
@@ -17,8 +18,9 @@ services:
   api:
     build:
       context: ./api
+      dockerfile: docker/dev/Dockerfile
     ports:
-      - "3001:3001"
+      - "3001:8080"
     env_file:
       - ./api/.env
     volumes:
@@ -32,7 +34,7 @@ services:
   database:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: db-password-secure
       MYSQL_DATABASE: mydb
     ports:
       - "3306:3306"

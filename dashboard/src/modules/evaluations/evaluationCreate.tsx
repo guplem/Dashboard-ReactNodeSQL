@@ -1,4 +1,4 @@
-import { Create, SimpleForm, TextInput, required, DateTimeInput, SelectInput, NumberInput } from "react-admin";
+import { Create, SimpleForm, TextInput, required, DateTimeInput, NumberInput } from "react-admin";
 
 export const EvaluationCreate = () => (
   <Create>

@@ -40,6 +40,6 @@ app.use("/projects", ProjectRouter(projectService));
 app.use("/evaluations", EvaluationRouter(evaluationService));
 // app.use("/projects/:id/evaluations", projetEvaluationRouter(evaluationService));
 
-app.listen(3001, () => {
+app.listen(8080, () => {
   console.log("\nAPI is running! 🚀");
 });
