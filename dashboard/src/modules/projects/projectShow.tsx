@@ -13,12 +13,12 @@ interface Evaluation {
 
 export const ProjectShow = () => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
+  const { id } = useParams();
 
   const { data, error, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteGetList<Evaluation>("evaluations", {
     pagination: { page: 1, perPage: 10 },
     sort: { field: "score", order: "DESC" },
-    filter: { projectId: projectId },
+    filter: { projectId: Number(id) },
   });
 
   return (
