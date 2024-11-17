@@ -5,7 +5,6 @@ import { projectTypesSelector } from "./projectTypes";
 export const ProjectCreate = () => (
   <Create>
     <SimpleForm>
-      <TextInput disabled label="Id" source="id" />
       <TextInput source="name" validate={[required()]} />
       <SelectInput source="type" validate={[required()]} choices={projectTypesSelector} />
       <NumberInput source="conformityProgress" validate={[required()]} />

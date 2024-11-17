@@ -1,3 +1,4 @@
+import { Model } from "./iModel";
 import { Dataset } from "./dataset";
 import { Project } from "./project";
 import { System } from "./system";

@@ -6,9 +6,15 @@ export const EvaluationEdit = () => (
   <Edit>
     <SimpleForm>
       <TextInput disabled label="Id" source="id" />
-      <TextInput source="name" validate={[required()]} />
-      <SelectInput source="type" validate={[required()]} choices={evaluationTypesSelector} />
-      <NumberInput source="conformityProgress" validate={[required()]} />
+      <NumberInput source="projectId" validate={[required()]} />
+      <NumberInput source="systemId" validate={[required()]} />
+      <NumberInput source="datasetId" validate={[required()]} />
+      <NumberInput source="score" validate={[required()]} />
+      <NumberInput source="accuracy" />
+      <NumberInput source="helpfulness" />
+      <NumberInput source="relevancy" />
+      <NumberInput source="toxicity" />
+      <DateTimeInput source="date" validate={[required()]} />
     </SimpleForm>
   </Edit>
 );

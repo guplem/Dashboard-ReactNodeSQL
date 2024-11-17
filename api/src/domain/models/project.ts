@@ -1,4 +1,4 @@
-import { Evaluation } from "./evaluation";
+import { Model } from "./iModel";
 
 export class Project extends Model<Project> {
   constructor(public id: number, public name: string, public type: string, public conformityProgress: number) {
