@@ -9,7 +9,7 @@ services:
       - ./dashboard/.env
     volumes:
       - ./dashboard:/app
-      - /app/node_modules # This is often done to ensure that the node_modules directory inside the container is isolated and not affected by the host machine's environment. It can also prevent the host's node_modules from being overwritten by the container's
+      - /app/node_modules # This is often done to ensure that the node_modules directory inside the container is isolated and not affected by the host machine's environment. It can also prevent the host's node_modules from being overwritten by the container's and also prevent issues with modules that are platform-specific.
     depends_on:
       - api
     networks:
@@ -25,7 +25,7 @@ services:
       - ./api/.env
     volumes:
       - ./api:/app
-      - /app/node_modules # This is often done to ensure that the node_modules directory inside the container is isolated and not affected by the host machine's environment. It can also prevent the host's node_modules from being overwritten by the container's
+      - /app/node_modules # This is often done to ensure that the node_modules directory inside the container is isolated and not affected by the host machine's environment. It can also prevent the host's node_modules from being overwritten by the container's and also prevent issues with modules that are platform-specific.
     depends_on:
       - database
     networks:
