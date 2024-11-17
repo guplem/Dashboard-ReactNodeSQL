@@ -6,7 +6,7 @@ import { EvaluationEdit } from "./evaluationEdit";
 import { EvaluationShow } from "./evaluationShow";
 
 export const EvaluationsResourceConfig = {
-  name: "Evaluations",
+  name: "evaluations",
   options: { label: "Evaluations" },
   recordRepresentation: (record: any) => ` - ${record.title}`,
   icon: Icon,

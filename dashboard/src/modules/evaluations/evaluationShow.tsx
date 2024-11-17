@@ -27,9 +27,17 @@ export const EvaluationShow = () => {
     : [];
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-      <div style={{ flex: "1 1 auto" }}>
-        <Show>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
+      <div style={{ flex: "1 1 auto", minWidth: "40%" }}>
+        <Show style={{ minWidth: "100%" }}>
           <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="project.name" />
@@ -45,7 +53,14 @@ export const EvaluationShow = () => {
         </Show>
       </div>
       {radarData.length > 0 && (
-        <div style={{ flex: "0 1 600px", maxWidth: "600px", marginLeft: "20px" }}>
+        <div
+          style={{
+            flex: "0 1 600px",
+            maxWidth: "600px",
+            marginLeft: "20px",
+            minWidth: "40%",
+          }}
+        >
           <SimpleRadarChart key={JSON.stringify(radarData)} data={radarData} />
         </div>
       )}

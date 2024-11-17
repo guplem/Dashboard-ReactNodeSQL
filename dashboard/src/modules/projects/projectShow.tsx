@@ -86,10 +86,10 @@ export const ProjectShow = () => {
         </SimpleShowLayout>
       </Show>
 
-      <Typography variant="h6" sx={{ margin: 2 }}>
+      <Typography variant="h6" sx={{ margin: 2, textAlign: "center" }}>
         Evaluations of the project
       </Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, justifyContent: "center" }}>
         {data?.pages.map((page) =>
           page.data.map((evaluation) => (
             <Card
@@ -101,7 +101,7 @@ export const ProjectShow = () => {
                   backgroundColor: "action.hover",
                 },
               }}
-              onClick={() => navigate(`/Evaluations/${evaluation.id}/show`)}
+              onClick={() => navigate(`/evaluations/${evaluation.id}/show`)}
             >
               <CardContent>
                 <PieChartWithNeedle score={evaluation.score * 100} />

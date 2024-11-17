@@ -60,8 +60,9 @@ export const DashboardPage = () => {
 
   // Prepare data for the BarChart
   const chartData = data.map((project) => ({
+    id: project.id,
     name: project.name,
-    progress: project.conformityProgress * 100, // Convert to percentage
+    conformityProgress: project.conformityProgress * 100, // Convert to percentage
   }));
 
   return (
@@ -88,10 +89,10 @@ export const DashboardPage = () => {
             cursor={false}
             labelFormatter={(value) => `Project: ${value}`}
             labelStyle={{ color: theme.palette.text.primary }}
-            formatter={(value) => [`${value}%`, "Progress"]}
+            formatter={(value) => [`${value}%`, "Conformity"]}
             contentStyle={{ backgroundColor: theme.palette.background.paper, borderColor: theme.palette.divider }}
           />
-          <Bar dataKey="progress" fill={theme.palette.primary.main} onClick={() => navigate("/api-test")} />
+          <Bar dataKey="conformityProgress" fill={theme.palette.primary.main} onClick={(data) => navigate(`/projects/${data.id}/show`)} style={{ cursor: "pointer" }} />
         </BarChart>
       </ResponsiveContainer>
 

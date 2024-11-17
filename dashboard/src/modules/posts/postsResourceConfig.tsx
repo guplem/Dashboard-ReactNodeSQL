@@ -6,7 +6,7 @@ import { PostEdit } from "./postEdit";
 import { PostShow } from "./postShow";
 
 export const PostsResourceConfig = {
-  name: "Posts",
+  name: "posts",
   options: { label: "Posts Demo" },
   recordRepresentation: (record: any) => ` - ${record.title}`,
   icon: Icon,
