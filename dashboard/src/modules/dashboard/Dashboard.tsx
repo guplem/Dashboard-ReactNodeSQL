@@ -1,5 +1,5 @@
 import { Admin, CustomRoutes, Resource } from "react-admin";
-import { Home } from "../home/home";
+import { DashboardPage } from "./dashboardPage";
 import { ApiTest } from "../apiTest/apiTest";
 import simpleRestProvider from "ra-data-simple-rest";
 import { Route } from "react-router-dom";
@@ -12,7 +12,7 @@ export const Dashboard = () => {
 
   return (
     // Menu items are defined here
-    <Admin dataProvider={dataProvider} dashboard={Home}>
+    <Admin dataProvider={dataProvider} dashboard={DashboardPage}>
       <Resource {...PostsResourceConfig} />
       <Resource {...ProjectsResourceConfig} />
       <CustomRoutes>
