@@ -2,14 +2,14 @@ import React from "react";
 import { Show, SimpleShowLayout, TextField, DateField, useShowController, Title } from "react-admin";
 import { PercentageField } from "../../utils/components/percentageField";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 const SimpleRadarChart = ({ data }: { data: { subject: string; value: number; fullMark: number }[] }) => {
   // Normalized data for radar chart
   const normalizedData = data.map((item) => {
     return {
       subject: item.subject,
-      value: item.value,
-      fullMark: item.fullMark,
+      value: (item.value / item.fullMark) * 100, // Normalize value to a percentage
     };
   });
 
@@ -18,7 +18,7 @@ const SimpleRadarChart = ({ data }: { data: { subject: string; value: number; fu
       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={normalizedData}>
         <PolarGrid />
         <PolarAngleAxis dataKey="subject" />
-        <PolarRadiusAxis />
+        <PolarRadiusAxis domain={[0, 100]} /> {/* Set domain to [0, 100] */}
         <Radar name="Evaluation" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
       </RadarChart>
     </ResponsiveContainer>
@@ -27,6 +27,7 @@ const SimpleRadarChart = ({ data }: { data: { subject: string; value: number; fu
 
 export const EvaluationShow = () => {
   const { record } = useShowController();
+  const navigate = useNavigate();
 
   const radarData = record
     ? [
@@ -60,7 +61,7 @@ export const EvaluationShow = () => {
                 <DateField source="date" />
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "5px" }}>
+            <div style={{ cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", margin: "5px" }} onClick={(data) => navigate(`/projects/${record.project.id}/show`)}>
               <div style={{ fontWeight: "normal", fontSize: "1em" }}>Project</div>
               <div style={{ fontWeight: "bold", fontSize: "2.0em" }}>{record?.project?.name}</div>
             </div>
