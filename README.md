@@ -231,4 +231,108 @@ Root/
  └── docker-compose.yml
 ```
 
+## How to create a new migration:
 
+1. Update the prisma schema file with the desired changes.
+2. Open a terminal within the `api` container
+
+> `container_id` is the _name_ (reported by `docker ps`) of the container you want to get inside of
+
+```bash
+docker exec -it <container_id> sh
+```
+
+3. Ensure you are in the /app directory (where the prisma schema is located and the app exists)
+
+```bash
+cd /app
+```
+
+4. Run the following command:
+
+```bash
+npx prisma migrate dev
+```
+
+5. Deploy Prisma Migrations (usually unnecessary):
+   > This is usually not necessary, as the migrations are run automatically when created and when the app starts. However, if you want to deploy the migrations manually.
+
+```bash
+npx prisma migrate deploy
+```
+
+6. Re-generate the Prisma Client:
+
+```bash
+npx prisma generate
+```
+
+7. From the host (dev) machine, from within the `api` directory, re-generate the Prisma Client:
+
+```bash
+npx prisma generate
+```
+
+## Deployment to Google Cloud:
+
+The application is deployed using Google Cloud Platform (GCP) services.
+
+To create a new version no CI/CD pipeline is used, so the following steps are needed:
+
+> Prerequisite: Ensure you have the Google Cloud CLI installed.
+
+> Ensure you are loged in with `docker login`.
+
+Configure docker to upload to gcloud:
+
+```
+gcloud auth configure-docker eu.gcr.io
+```
+
+### API
+
+1. Build the docker image:
+
+```bash
+docker build -f docker/prod/Dockerfile -t dashboard-api .
+```
+
+2. Tag the image:
+
+```bash
+docker tag dashboard-api eu.gcr.io/dashboard-reactnodesql/dashboard-api:latest
+```
+
+> Latest can be replaced with a version number if desired. For example: `gillemp/dashboard-api:1.0.0` (This applies to the tag and upload)
+
+3. Upload the image to Google Cloud's Artifact Registry:
+
+```bash
+docker push eu.gcr.io/dashboard-reactnodesql/dashboard-api:latest
+```
+
+4. In the Cloud Run of the Google Cloud Console, select `Edit and deploy new revision`. And select the image you just uploaded.
+
+### Dashboard
+
+1. Build the docker image:
+
+```bash
+docker build -f docker/prod/Dockerfile -t dashboard-front .
+```
+
+2. Tag the image:
+
+```bash
+docker tag dashboard-front eu.gcr.io/dashboard-reactnodesql/dashboard-front:latest
+```
+
+> Latest can be replaced with a version number if desired. For example: `gillemp/dashboard-api:1.0.0` (This applies to the tag and upload)
+
+3. Upload the image to Google Cloud's Artifact Registry:
+
+```bash
+docker push eu.gcr.io/dashboard-reactnodesql/dashboard-front:latest
+```
+
+4. In the Cloud Run of the Google Cloud Console, select `Edit and deploy new revision`. And select the image you just uploaded.
