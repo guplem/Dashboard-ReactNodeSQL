@@ -1,58 +1,44 @@
-# Full Stack Dashboard
+# Full Stack Compliance Dashboard
 
-This project contains a full-stack compliance dashboard that tracks the conformity progress of multiple LLM-based systems and provides detailed evaluation results.
-
-The frontend utilizes **React** and **React Admin** for the interface, while the backend is powered by **Node.js** with **Express** and **Prisma** ORM for database management. **MySQL** is used as the database to store system evaluation data. The entire application is containerized using **Docker** for ease of development and deployment.
+This project is a full-stack application designed to monitor and track the conformity progress of multiple LLM-based systems, providing detailed evaluation results. It combines a React-based frontend, a Node.js/Express API backend, and a MySQL database, all containerized for seamless deployment.
 
 ---
 
 ## Architecture & Technology Stack
 
-### 1. **Frontend (React with TS)**
+### 1. **Frontend (React + TypeScript)**
 
-The dashboard is built using:
+- **React.js**: For building a dynamic and responsive interface.
+- **React Admin**: Enables rapid development of admin dashboards.
+- **Recharts**: Used for displaying visual data insights, such as pie and bar charts.
 
-- **React.js**: A JavaScript library for building component-based user interfaces.
-- **React Admin**: A framework for quickly building admin applications on top of REST APIs.
-- **Recharts**: A charting library built on React, used to display progress and evaluation data in the form of pie charts and bar charts.
+### 2. **Backend (Node.js/Express + TypeScript)**
 
-### 2. **Backend (Node.js/Express with TS)**
-
-The API is built using:
-
-- **Node.js**: A runtime environment that executes JavaScript on the server-side.
-- **Express**: A minimalist web application framework for Node.js, used to handle routing and API logic.
-- **Prisma**: An ORM (Object-Relational Mapping) tool for interacting with the database, managing migrations, and seeding data.
+- **Node.js**: Executes server-side logic.
+- **Express**: Provides robust routing and API logic.
+- **Prisma ORM**: Handles database interactions, migrations, and schema management.
 
 ### 3. **Database (MySQL)**
 
-The database is build with:
-
-- **MySQL**: A relational database management system to store project and evaluation data.
-- **Prisma**: Prisma ORM is used to interface with MySQL, managing migrations and schema changes.
+- **MySQL**: Stores system and evaluation data.
+- **Prisma**: Ensures efficient and reliable database access and management.
 
 ### 4. **Containerization (Docker & Docker Compose)**
 
-The entire project is containerized using:
+- **Docker**: Packages the frontend, API, and MySQL database into isolated containers.
+- **Docker Compose**: Manages multi-container applications, networking, and volumes.
 
-- **Docker**: Each service (frontend, and API) is packaged into its own Docker container. The database is also containerized, but official MySQL image from Docker Hub is used.
-- **Docker Compose**: A tool to define and run multi-container Docker applications. It manages the services, networking, and volumes for the project.
+### 5. **Testing Tools**
 
-### 5. **Testing**
+> No testing has been coded, but the API project has been designed with testability in mind, adhering to principles of low coupling and high cohesion, enabling dependency injection and mocking for comprehensive testing.
 
-The API project has been designed with testability in mind, adhering to principles of low coupling and high cohesion, enabling dependency injection and mocking for comprehensive testing.
+- **Jest**: For unit and integration tests.
+- **Testing Library**: For simulating real user interactions with React components.
 
-Although no tests are applied in this specific task, the following tools are available for testing purposes:
+### 6. **Code Quality Tools**
 
-- **Jest**: A testing framework for unit and integration testing.
-- **Testing Library**: A set of utilities for testing React components in a way that simulates real user interactions.
-
-### 6. **Other Tools**
-
-For code quality and formatting:
-
-- **ESLint**: A linter that identifies potential issues in JavaScript/TypeScript code.
-- **Prettier**: An opinionated code formatter that ensures a consistent style across the codebase.
+- **ESLint**: Detects potential issues in the code.
+- **Prettier**: Ensures consistent formatting across the codebase.
 
 ---
 
@@ -104,106 +90,6 @@ From within the project list view, project view, evaluation list view, and evalu
 
 From within the project list view, and evaluation list view, users can create new projects and evaluations by clicking on the create button. This will open a form to create new data.
 
-## Data Flow
-
-// TODO: Improve the explanation of how the React Admin dataProvider works. Then also explain the data flow between the frontend and the backend, how the data goes through the distinct layers (router, repository, service, ...) and the database interaction using prisma.
-
-The **frontend** fetches project data from the backend API, which includes project names and conformity progress.
-
----
-
-## Docker Configuration
-
-The application consists of three services: **frontend (React dashboard)**, **backend (API server)**, and **database (MySQL)**. These services are defined in the `docker-compose.yml` file.
-
-### 1. **Frontend (React - Dashboard)**
-
-The **dashboard** (frontend), in _development_, is configured to:
-
-- Build from the Dockerfile in `dashboard/docker/dev/Dockerfile`.
-- Expose port `3000` for access to the frontend.
-- Be configured with the environment variables from the .env file.
-
-The **dashboard** (frontend), in _production_, is configured to:
-
-- Build from the Dockerfile in `dashboard/docker/prod/Dockerfile`.
-- Expose port `8080` for access to the frontend.
-- Be configured with the environment variables from GCP .YAML file.
-
-### 2. **Backend (Node.js - API)**
-
-The **API** service, in _development_, is configured to:
-
-- Build from the Dockerfile in `api/docker/dev/Dockerfile`, which uses the entrypoint.sh script to handle migrations, seeding and launching the API.
-- Expose port `3001` for access to the API.
-- Connect to the **MySQL** database and serve the evaluation data.
-- Use **Prisma** ORM to perform database migrations, seeding and manage manage interactions.
-
-The **API** service, in _production_, is configured to:
-
-- Build from the Dockerfile in `api/docker/prod/Dockerfile`, which uses the entrypoint.sh script to handle migrations, seeding and launching the API.
-- Expose port `8080` for access to the API.
-- Connect to the **MySQL** database and serve the evaluation data.
-- Use **Prisma** ORM to perform database migrations, seeding and manage manage interactions.
-
-### 3. **Database (MySQL)**
-
-The **MySQL** service, in _development_, is configured to:
-
-- Use the official `mysql:8.0` image.
-- Set up environment variables for MySQL credentials and create a persistent volume for the database.
-- Expose port `3306` for access to the database.
-- Persist data in the `database/data` directory.
-
-The **MySQL** service, in _production_, is using a GCP MySQL instance, which also has exposed port `3306` for access to the database.
-
-### Networking and Volumes
-
-In development:
-
-- The services are connected through a Docker network (`app-network`), ensuring they can communicate securely.
-- Database data is persisted through a vlume.
-- Volumes are used for the Frontend and API services to allow for hot-reloading and code changes to be reflected in the containers.
-
-In production:
-
-- The services run in Google Cloud Platform (GCP) Cloud Run and Cloud SQL.
-
----
-
-## Setup Instructions
-
-Before running the application, ensure you have the following installed:
-
-- [Git](https://git-scm.com/)
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
-
-1. **Clone the Repository**:
-
-   ```bash
-   git clone https://github.com/guplem/Dashboard-ReactNodeSQL.git
-   cd Dashboard-ReactNodeSQL
-   ```
-
-2. **Build and Start the Containers**:
-
-   ```bash
-   docker-compose up --build
-   ```
-
-3. **Access the Application**:
-
-   - **Frontend**: Access the React Admin interface at [http://localhost:3000](http://localhost:3000).
-   - **Backend**: The Express API is running at [http://localhost:3001](http://localhost:3001) (if needed for debugging or development).
-   - **Database**: MySQL is accessible on port `3306` (if needed for debugging or direct SQL access).
-
-4. To stop and remove all containers, use:
-
-```bash
-docker-compose down
-```
-
 ---
 
 ## Folder Structure Overview
@@ -211,128 +97,192 @@ docker-compose down
 ```
 Root/
  ├── api/
- |    ├── docker
- |    |   ├── dev
- |    |   |    └── Dockerfile
- |    |   └── prod
- |    |        └── Dockerfile
- |    ├── prisma/
- |    ├── entrypoint.sh
- |    └── .env
+ │    ├── docker/
+ │    ├── prisma/
+ │    └── entrypoint.sh
  ├── dashboard/
- |    ├── docker
- |    |   ├── dev
- |    |   |    └── Dockerfile
- |    |   └── prod
- |    |        └── Dockerfile
- |    └── .env
+ │    ├── docker/
+ │    └── .env
  ├── database/
- |    └── data/
  └── docker-compose.yml
 ```
 
-## How to create a new migration:
+---
 
-1. Update the prisma schema file with the desired changes.
-2. Open a terminal within the `api` container
+## Data Flow
 
-> `container_id` is the _name_ (reported by `docker ps`) of the container you want to get inside of
+The **frontend** communicates with the **backend** via RESTful APIs to fetch and update data.
 
-```bash
-docker exec -it <container_id> sh
-```
+- React Admin uses a **dataProvider** abstraction for API calls, mapping resources (e.g., projects, evaluations) to endpoints.
+- Backend layers include:
+  - **Router**: Handles HTTP requests and forwards them to services.
+  - **Service**: Contains business logic for processing requests.
+  - **Repository**: Interfaces with the Prisma ORM for database access.
 
-3. Ensure you are in the /app directory (where the prisma schema is located and the app exists)
+---
 
-```bash
-cd /app
-```
+## Docker Configuration
 
-4. Run the following command:
+The project is containerized for both development and production.
 
-```bash
-npx prisma migrate dev
-```
+### Development
 
-5. Deploy Prisma Migrations (usually unnecessary):
-   > This is usually not necessary, as the migrations are run automatically when created and when the app starts. However, if you want to deploy the migrations manually.
+- **Frontend**: Served on `http://localhost:3000`.
+- **Backend**: Available at `http://localhost:3001`.
+- **Database**: MySQL accessible at `localhost:3306`.
 
-```bash
-npx prisma migrate deploy
-```
+> The development uses the .env files to configure the services.
 
-6. Re-generate the Prisma Client:
+### Production
 
-```bash
-npx prisma generate
-```
+- Deployed using **Google Cloud Platform (GCP)** services like **Cloud Run** and **Cloud SQL**.
 
-7. From the host (dev) machine, from within the `api` directory, re-generate the Prisma Client:
+> The production configuration is set up in .YAML files for the services in the cloud.
 
-```bash
-npx prisma generate
-```
+---
 
-## Deployment to Google Cloud:
+## Database Migrations
 
-The application is deployed using Google Cloud Platform (GCP) services.
+Database migrations ensure schema changes are consistently applied.
 
-To create a new version no CI/CD pipeline is used, so the following steps are needed:
+### Creating a New Migration
 
-> Prerequisite: Ensure you have the Google Cloud CLI installed.
+1. **Update the Prisma schema** in `api/prisma/schema.prisma`.
+2. **Access the API container**:
 
-> Ensure you are loged in with `docker login`.
+   ```bash
+   docker exec -it <container_id> sh
+   ```
 
-Configure docker to upload to gcloud:
+   > Replace `<container_id>` with the ID of the API container found running `docker ps`.
 
-```
-gcloud auth configure-docker eu.gcr.io
-```
+3. Navigate to the app directory:
 
-### API
+   ```bash
+   cd /app
+   ```
 
-1. Build the docker image:
+4. Create the migration:
 
-```bash
-docker build -f docker/prod/Dockerfile -t dashboard-api .
-```
+   ```bash
+   npx prisma migrate dev --name <migration_name>
+   ```
 
-2. Tag the image:
+   > Replace `<migration_name>` with a descriptive name for the migration.
 
-```bash
-docker tag dashboard-api eu.gcr.io/dashboard-reactnodesql/dashboard-api:latest
-```
+5. Deploy the migration:
 
-> Latest can be replaced with a version number if desired. For example: `gillemp/dashboard-api:1.0.0` (This applies to the tag and upload)
+   ```bash
+   npx prisma migrate deploy
+   ```
 
-3. Upload the image to Google Cloud's Artifact Registry:
+6. Regenerate the Prisma client:
 
-```bash
-docker push eu.gcr.io/dashboard-reactnodesql/dashboard-api:latest
-```
+   ```bash
+   npx prisma generate
+   ```
 
-4. In the Cloud Run of the Google Cloud Console, select `Edit and deploy new revision`. And select the image you just uploaded.
+> This ensures the Prisma client reflects the latest schema changes.
 
-### Dashboard
+---
 
-1. Build the docker image:
+## Deployment to Google Cloud Platform (GCP)
 
-```bash
-docker build -f docker/prod/Dockerfile -t dashboard-front .
-```
+The project uses **GCP Cloud Run** and **Cloud SQL** for scalable, managed deployment.
 
-2. Tag the image:
+### Prerequisites
 
-```bash
-docker tag dashboard-front eu.gcr.io/dashboard-reactnodesql/dashboard-front:latest
-```
+- Install the **Google Cloud CLI**.
+- Authenticate with Docker:
 
-> Latest can be replaced with a version number if desired. For example: `gillemp/dashboard-api:1.0.0` (This applies to the tag and upload)
+  ```bash
+  gcloud auth configure-docker eu.gcr.io
+  ```
 
-3. Upload the image to Google Cloud's Artifact Registry:
+### API Deployment
 
-```bash
-docker push eu.gcr.io/dashboard-reactnodesql/dashboard-front:latest
-```
+1. **Build the Docker image**:
 
-4. In the Cloud Run of the Google Cloud Console, select `Edit and deploy new revision`. And select the image you just uploaded.
+   ```bash
+   docker build -f api/docker/prod/Dockerfile -t dashboard-api .
+   ```
+
+2. **Tag the image**:
+
+   ```bash
+   docker tag dashboard-api eu.gcr.io/dashboard-reactnodesql/dashboard-api:latest
+   ```
+
+3. **Push the image to Artifact Registry**:
+
+   ```bash
+   docker push eu.gcr.io/dashboard-reactnodesql/dashboard-api:latest
+   ```
+
+4. Deploy in **Cloud Run**:
+   - Open the Cloud Run console.
+   - Select `Edit and deploy new revision`.
+   - Choose the newly pushed image.
+
+### Frontend Deployment
+
+1. **Build the Docker image**:
+
+   ```bash
+   docker build -f dashboard/docker/prod/Dockerfile -t dashboard-front .
+   ```
+
+2. **Tag the image**:
+
+   ```bash
+   docker tag dashboard-front eu.gcr.io/dashboard-reactnodesql/dashboard-front:latest
+   ```
+
+3. **Push the image to Artifact Registry**:
+
+   ```bash
+   docker push eu.gcr.io/dashboard-reactnodesql/dashboard-front:latest
+   ```
+
+4. Deploy in **Cloud Run**:
+   - Open the Cloud Run console.
+   - Select `Edit and deploy new revision`.
+   - Choose the newly pushed image.
+
+---
+
+## Setup Instructions
+
+Follow these steps to set up the project locally and run it using Docker Compose.
+
+### Prerequisites
+
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+### Steps
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/guplem/Dashboard-ReactNodeSQL.git
+   cd Dashboard-ReactNodeSQL
+   ```
+
+2. Build and start the containers:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+3. Access the application:
+
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - Backend: [http://localhost:3001](http://localhost:3001)
+
+4. Stop and remove all containers:
+
+   ```bash
+   docker-compose down
+   ```
