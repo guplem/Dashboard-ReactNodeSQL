@@ -1,65 +1,177 @@
-# Full Stack Application with React Admin, Node.js, MySQL, and Docker
+# Full Stack Dashboard
 
-This repository contains a full-stack application with three main components:
+This project contains a full-stack compliance dashboard that tracks the conformity progress of multiple LLM-based systems and provides detailed evaluation results.
 
-- **Frontend**: A **React Admin** application powered by React.
-- **Backend**: A **Node.js (Express)** API serving data to the frontend.
-- **Database**: A **MySQL** database storing data that the backend API interacts with.
-
-All components are containerized using Docker, making it easy to build, run, and share the application with minimal setup.
+The frontend utilizes **React** and **React Admin** for the interface, while the backend is powered by **Node.js** with **Express** and **Prisma** ORM for database management. **MySQL** is used as the database to store system evaluation data. The entire application is containerized using **Docker** for ease of development and deployment.
 
 ---
 
-## Project Structure
+## Architecture & Technology Stack
 
-```
-Root/
- ├── dashboard/
- |    ├── Dockerfile
- |    ├── .env
- |    ├── public/
- |    └── src/
- ├── api/
- |    ├── Dockerfile
- |    ├── entrypoint.sh
- |    ├── .env
- |    ├── prisma/
- |    |    ├── schema.prisma
- |    |    └── migrations/
- |    └── src/
- |         ├── application/
- |         │    └── services/
- |         ├── domain/
- |         │    ├── models/
- |         │    └── repositories/
- |         ├── infrastructure/
- |         │    ├── repositories/
- |         │    └── http/
- |         └── tests/
- ├── database/
- |    └── data/
- └── docker-compose.yml
-```
+### 1. **Frontend (React with TS)**
 
-### Key Components
+The dashboard is built using:
 
-- **dashboard/**: Contains the **React Admin** frontend application written in TypeScript and built for interacting with the backend API.
-  - Includes environment variables in `.env`.
-  - `Dockerfile` builds and runs the React Admin app within a container.
+- **React.js**: A JavaScript library for building component-based user interfaces.
+- **React Admin**: A framework for quickly building admin applications on top of REST APIs.
+- **Recharts**: A charting library built on React, used to display progress and evaluation data in the form of pie charts and bar charts.
 
-- **api/**: Contains the **Express** backend API built with TypeScript, integrated with **Prisma** for database ORM.
-  - **prisma/**: Manages the Prisma schema, database migrations, and seed scripts.
-  - **entrypoint.sh**: Ensures that the database is ready, applies migrations, seeds the database, and starts the API.
-  - Includes environment variables in `.env`.
-  - `Dockerfile` builds and runs the API server within a container.
+### 2. **Backend (Node.js/Express with TS)**
 
-- **database/**: Contains the **MySQL** database setup, with persistent data stored in the `data/` directory.
+The API is built using:
 
-- **docker-compose.yml**: Defines services (`dashboard`, `api`, and `database`), their configurations, and how they connect within the `app-network`.
+- **Node.js**: A runtime environment that executes JavaScript on the server-side.
+- **Express**: A minimalist web application framework for Node.js, used to handle routing and API logic.
+- **Prisma**: An ORM (Object-Relational Mapping) tool for interacting with the database, managing migrations, and seeding data.
+
+### 3. **Database (MySQL)**
+
+The database is build with:
+
+- **MySQL**: A relational database management system to store project and evaluation data.
+- **Prisma**: Prisma ORM is used to interface with MySQL, managing migrations and schema changes.
+
+### 4. **Containerization (Docker & Docker Compose)**
+
+The entire project is containerized using:
+
+- **Docker**: Each service (frontend, and API) is packaged into its own Docker container. The database is also containerized, but official MySQL image from Docker Hub is used.
+- **Docker Compose**: A tool to define and run multi-container Docker applications. It manages the services, networking, and volumes for the project.
+
+### 5. **Testing**
+
+The API project has been designed with testability in mind, adhering to principles of low coupling and high cohesion, enabling dependency injection and mocking for comprehensive testing.
+
+Although no tests are applied in this specific task, the following tools are available for testing purposes:
+
+- **Jest**: A testing framework for unit and integration testing.
+- **Testing Library**: A set of utilities for testing React components in a way that simulates real user interactions.
+
+### 6. **Other Tools**
+
+For code quality and formatting:
+
+- **ESLint**: A linter that identifies potential issues in JavaScript/TypeScript code.
+- **Prettier**: An opinionated code formatter that ensures a consistent style across the codebase.
 
 ---
 
-## Prerequisites
+## Front-end Dashboard Views
+
+### Main (Dashboard's Home) View
+
+The main dashboard view shows a list of the top 10 performing projects in a bar chart. The chart displays the conformity progress of each project, allowing users to compare the progress visually.
+
+Tapping on a project will navigate to the project's view.
+
+> It also includes a link to the _API test_ view, which displays a simple _hello world_ message from the API if that service is running and accessible.
+
+### Projects List View
+
+A list of all projects is displayed in a table format, showing the project name, type and conformity progress. Users can click on a project to view detailed evaluation results for that project.
+
+> The list can be exported to a CSV file by clicking on the export button.
+
+> The items can be selected and deleted by clicking on the delete button.
+
+### Project View
+
+The page displays the project's name and type alongisde a visual representation of the conformity progress with a pie chart with a needle pointing to the current progress.
+
+In addition, a list of the distincts evaluations performed to the project are displayed, sorted by score, with a pie chart with a needle pointing to the evaluation's score and showing the evaluation's system and dataset.
+
+> Tapping on an evaluation will navigate to the evaluation's view.
+
+### Evaluations List View
+
+A list of all evaluations is displayed in a table format, showing the project they are related to, system, dataset, score, and other metrics (accuracy, relevancy, helpfulness, and toxicity). Users can click on an evaluation to view detailed evaluation results for that system in the Evaluation View.
+
+> The list can be exported to a CSV file by clicking on the export button.
+
+> The items can be selected and deleted by clicking on the delete button.
+
+### Evaluation View
+
+The page displays the evaluation's project, system, dataset, score, and other metrics (accuracy, relevancy, helpfulness, and toxicity) alongside a visual representation of the different performance of the distinct metrics in a radar chart.
+
+### Edit views
+
+From within the project list view, project view, evaluation list view, and evaluation view, users can edit the project and evaluation data by clicking on the edit button. This will open a form to edit the data.
+
+> A delete button is also available to delete the project or evaluation.
+
+### Create views
+
+From within the project list view, and evaluation list view, users can create new projects and evaluations by clicking on the create button. This will open a form to create new data.
+
+## Data Flow
+
+// TODO: Improve the explanation of how the React Admin dataProvider works. Then also explain the data flow between the frontend and the backend, how the data goes through the distinct layers (router, repository, service, ...) and the database interaction using prisma.
+
+The **frontend** fetches project data from the backend API, which includes project names and conformity progress.
+
+---
+
+## Docker Configuration
+
+The application consists of three services: **frontend (React dashboard)**, **backend (API server)**, and **database (MySQL)**. These services are defined in the `docker-compose.yml` file.
+
+### 1. **Frontend (React - Dashboard)**
+
+The **dashboard** (frontend), in _development_, is configured to:
+
+- Build from the Dockerfile in `dashboard/docker/dev/Dockerfile`.
+- Expose port `3000` for access to the frontend.
+- Be configured with the environment variables from the .env file.
+
+The **dashboard** (frontend), in _production_, is configured to:
+
+- Build from the Dockerfile in `dashboard/docker/prod/Dockerfile`.
+- Expose port `8080` for access to the frontend.
+- Be configured with the environment variables from GCP .YAML file.
+
+### 2. **Backend (Node.js - API)**
+
+The **API** service, in _development_, is configured to:
+
+- Build from the Dockerfile in `api/docker/dev/Dockerfile`, which uses the entrypoint.sh script to handle migrations, seeding and launching the API.
+- Expose port `3001` for access to the API.
+- Connect to the **MySQL** database and serve the evaluation data.
+- Use **Prisma** ORM to perform database migrations, seeding and manage manage interactions.
+
+The **API** service, in _production_, is configured to:
+
+- Build from the Dockerfile in `api/docker/prod/Dockerfile`, which uses the entrypoint.sh script to handle migrations, seeding and launching the API.
+- Expose port `8080` for access to the API.
+- Connect to the **MySQL** database and serve the evaluation data.
+- Use **Prisma** ORM to perform database migrations, seeding and manage manage interactions.
+
+### 3. **Database (MySQL)**
+
+The **MySQL** service, in _development_, is configured to:
+
+- Use the official `mysql:8.0` image.
+- Set up environment variables for MySQL credentials and create a persistent volume for the database.
+- Expose port `3306` for access to the database.
+- Persist data in the `database/data` directory.
+
+The **MySQL** service, in _production_, is using a GCP MySQL instance, which also has exposed port `3306` for access to the database.
+
+### Networking and Volumes
+
+In development:
+
+- The services are connected through a Docker network (`app-network`), ensuring they can communicate securely.
+- Database data is persisted through a vlume.
+- Volumes are used for the Frontend and API services to allow for hot-reloading and code changes to be reflected in the containers.
+
+In production:
+
+- The services run in Google Cloud Platform (GCP) Cloud Run and Cloud SQL.
+
+---
+
+## Setup Instructions
 
 Before running the application, ensure you have the following installed:
 
@@ -67,45 +179,26 @@ Before running the application, ensure you have the following installed:
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
----
+1. **Clone the Repository**:
 
-## Getting Started
+   ```bash
+   git clone https://github.com/guplem/Dashboard-ReactNodeSQL.git
+   cd Dashboard-ReactNodeSQL
+   ```
 
-### 1. Clone the Repository
+2. **Build and Start the Containers**:
 
-Clone the repository to your local machine:
+   ```bash
+   docker-compose up --build
+   ```
 
-```bash
-git clone https://github.com/guplem/Dashboard-ReactNodeSQL.git
-cd Dashboard-ReactNodeSQL
-```
+3. **Access the Application**:
 
-### 2. Build and Run the Application
+   - **Frontend**: Access the React Admin interface at [http://localhost:3000](http://localhost:3000).
+   - **Backend**: The Express API is running at [http://localhost:3001](http://localhost:3001) (if needed for debugging or development).
+   - **Database**: MySQL is accessible on port `3306` (if needed for debugging or direct SQL access).
 
-Use Docker Compose to build and start the services:
-
-```bash
-docker-compose up --build
-```
-
-This will:
-
-- Build Docker images for the frontend (`dashboard`), backend (`api`), and database (`database`).
-- Start the containers in the background.
-
----
-
-## Accessing the Application
-
-- **Frontend**: Access the React Admin interface at [http://localhost:3000](http://localhost:3000).
-- **Backend**: The Express API is running at [http://localhost:3001](http://localhost:3001).
-- **Database**: MySQL is accessible on port `3306` (if needed for debugging or direct SQL access).
-
----
-
-## Stopping the Application
-
-To stop and remove all containers, use:
+4. To stop and remove all containers, use:
 
 ```bash
 docker-compose down
@@ -113,60 +206,29 @@ docker-compose down
 
 ---
 
-## How It Works
+## Folder Structure Overview
 
-### Frontend (React Admin)
+```
+Root/
+ ├── api/
+ |    ├── docker
+ |    |   ├── dev
+ |    |   |    └── Dockerfile
+ |    |   └── prod
+ |    |        └── Dockerfile
+ |    ├── prisma/
+ |    ├── entrypoint.sh
+ |    └── .env
+ ├── dashboard/
+ |    ├── docker
+ |    |   ├── dev
+ |    |   |    └── Dockerfile
+ |    |   └── prod
+ |    |        └── Dockerfile
+ |    └── .env
+ ├── database/
+ |    └── data/
+ └── docker-compose.yml
+```
 
-- Built with **React Admin** to provide an interface for managing application data.
-- Communicates with the backend via RESTful API endpoints.
 
-### Backend (Node.js + Prisma)
-
-- Built using **Express** with **TypeScript**.
-- Uses **Prisma** for database management and ORM.
-- Initializes the database using migrations and seeds data during container startup.
-
-### Database (MySQL)
-
-- Uses the official `mysql:8.0` Docker image.
-- Data is persisted in the `database/data` folder to retain information between container restarts.
-
----
-
-## Useful Commands
-
-- **Start the application**:  
-  ```bash
-  docker-compose up
-  ```
-
-- **Rebuild containers**:  
-  ```bash
-  docker-compose up --build
-  ```
-
-- **Stop the application**:  
-  ```bash
-  docker-compose down
-  ```
-
-- **View logs for all services**:  
-  ```bash
-  docker-compose logs
-  ```
-
----
-
-## Troubleshooting
-
-- **Frontend issues**:
-  - Ensure the `dashboard` container is running and properly built.
-  - Check the browser console for errors and confirm the API is reachable.
-
-- **Backend issues**:
-  - Ensure the `api` container is running and successfully applied Prisma migrations.
-  - Check the logs for errors using `docker-compose logs api`.
-
-- **Database issues**:
-  - Ensure the `database` container is running and accessible.
-  - Check if the persistent data directory (`database/data`) has proper read/write permissions.
