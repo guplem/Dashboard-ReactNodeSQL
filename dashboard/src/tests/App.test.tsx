@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Dashboard } from "../modules/dashboard/Dashboard";
+import { Dashboard } from "../modules/dashboard/dashboard";
 
 test("renders learn react link", () => {
   render(<Dashboard />);

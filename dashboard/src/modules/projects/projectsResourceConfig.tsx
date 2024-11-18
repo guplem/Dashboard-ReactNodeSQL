@@ -1,5 +1,4 @@
 import Icon from "@mui/icons-material/AutoAwesome";
-
 import { ProjectList } from "./projectList";
 import { ProjectCreate } from "./projectCreate";
 import { ProjectEdit } from "./projectEdit";

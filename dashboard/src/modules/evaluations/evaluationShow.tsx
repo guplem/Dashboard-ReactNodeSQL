@@ -1,8 +1,7 @@
-import React from "react";
-import { Show, SimpleShowLayout, TextField, DateField, useShowController, Title } from "react-admin";
+import { Show, SimpleShowLayout, TextField, DateField, useShowController } from "react-admin";
 import { PercentageField } from "../../utils/components/percentageField";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SimpleRadarChart = ({ data }: { data: { subject: string; value: number; fullMark: number }[] }) => {
   // Normalized data for radar chart

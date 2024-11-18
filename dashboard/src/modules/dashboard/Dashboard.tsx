@@ -3,7 +3,6 @@ import { DashboardPage } from "./dashboardPage";
 import { ApiTest } from "../apiTest/apiTest";
 import simpleRestProvider from "ra-data-simple-rest";
 import { Route } from "react-router-dom";
-import { PostsResourceConfig } from "../posts/postsResourceConfig";
 import { ProjectsResourceConfig } from "../projects/projectsResourceConfig";
 import { EvaluationsResourceConfig } from "../evaluations/evaluationResourceConfig";
 

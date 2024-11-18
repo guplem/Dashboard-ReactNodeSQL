@@ -1,16 +1,9 @@
 import { Title, useGetList } from "react-admin";
-import { Card, CardContent, Typography, List, ListItem, ListItemText, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { useDataProvider } from "react-admin";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from "recharts";
-import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useTheme } from "@mui/material/styles";
-
-interface Project {
-  id: number;
-  name: string;
-  conformityProgress: number;
-}
+import { Project } from "../projects/iProject";
 
 const RefreshButton = ({ refetch, navigate }: { refetch: () => void; navigate: NavigateFunction }) => (
   <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", position: "absolute", bottom: "20px", right: "20px" }}>

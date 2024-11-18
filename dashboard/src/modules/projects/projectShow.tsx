@@ -1,17 +1,10 @@
-import { Show, SimpleShowLayout, TextField, ChipField, useInfiniteGetList, useShowController } from "react-admin";
+import { Show, SimpleShowLayout, TextField, useInfiniteGetList, useShowController } from "react-admin";
 import { Card, CardContent, Typography, Button, Chip } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
-import { PercentageField } from "../../utils/components/percentageField";
 import { PieChart, Pie, Cell } from "recharts";
 import { useTheme } from "@mui/material/styles";
-
-interface Evaluation {
-  id: number;
-  score: number;
-  system: { name: string };
-  dataset: { name: string };
-}
+import { Evaluation } from "../evaluations/iEvaluation";
 
 const RADIAN = Math.PI / 180;
 
@@ -72,7 +65,7 @@ export const ProjectShow = () => {
 
   const { record } = useShowController();
 
-  const { data, error, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteGetList<Evaluation>("evaluations", {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteGetList<Evaluation>("evaluations", {
     pagination: { page: 1, perPage: 10 },
     sort: { field: "score", order: "DESC" },
     filter: { projectId: Number(id) },
@@ -161,7 +154,6 @@ export const ProjectShow = () => {
           </Button>
         </Box>
       )}
-
       <br />
     </>
   );
