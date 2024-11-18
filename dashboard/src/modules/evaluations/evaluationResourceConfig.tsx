@@ -8,7 +8,7 @@ import { EvaluationShow } from "./evaluationShow";
 export const EvaluationsResourceConfig = {
   name: "evaluations",
   options: { label: "Evaluations" },
-  recordRepresentation: (record: any) => ` - ${record.title}`,
+  recordRepresentation: (record: any) => ` of ${record.project.name}`,
   icon: Icon,
   list: EvaluationList,
   create: EvaluationCreate,

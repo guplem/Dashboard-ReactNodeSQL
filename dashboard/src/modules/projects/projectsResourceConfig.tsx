@@ -8,7 +8,7 @@ import { ProjectShow } from "./projectShow";
 export const ProjectsResourceConfig = {
   name: "projects",
   options: { label: "Projects" },
-  recordRepresentation: (record: any) => ` - ${record.title}`,
+  recordRepresentation: (record: any) => ` - ${record.name}`,
   icon: Icon,
   list: ProjectList,
   create: ProjectCreate,
