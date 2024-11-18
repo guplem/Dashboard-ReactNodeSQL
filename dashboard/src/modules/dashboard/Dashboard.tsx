@@ -14,12 +14,15 @@ export const Dashboard = () => {
   return (
     // Menu items are defined here
     <Admin dataProvider={dataProvider} dashboard={DashboardPage}>
-      <Resource {...PostsResourceConfig} />
       <Resource {...ProjectsResourceConfig} />
       <Resource {...EvaluationsResourceConfig} />
       <CustomRoutes>
         <Route path="/api-test" element={<ApiTest />} />
       </CustomRoutes>
+
+      {/* This is the first paart I did develop, jsut to test that the API, front and database were up and running with very simple models and calls */}
+      {/* Has been disabled to avoid confusion, but uncomenting this line will provide easy access to a simple "posts management system" */}
+      {/* <Resource {...PostsResourceConfig} /> */}
     </Admin>
   );
 };

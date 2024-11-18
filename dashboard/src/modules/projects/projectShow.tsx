@@ -1,5 +1,5 @@
 import { Show, SimpleShowLayout, TextField, ChipField, useInfiniteGetList, useShowController } from "react-admin";
-import { Card, CardContent, Typography, Button } from "@mui/material";
+import { Card, CardContent, Typography, Button, Chip } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 import { PercentageField } from "../../utils/components/percentageField";
@@ -92,9 +92,19 @@ export const ProjectShow = () => {
         <div style={{ flex: "1 1 auto", minWidth: "40%" }}>
           <Show>
             <SimpleShowLayout>
-              <TextField source="name" />
-              <ChipField source="type" />
-              <PercentageField source="conformityProgress" />
+              <div style={{ display: "flex", justifyContent: "space-between", margin: "5px" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ fontWeight: "bold", marginRight: "10px" }}>ID:</div>
+                  <TextField source="id" />
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "5px" }}>
+                {/* <div style={{ fontWeight: "normal", fontSize: "1em" }}>Project</div> */}
+                <div style={{ fontWeight: "bold", fontSize: "2.0em" }}>{record?.name}</div>
+                <Chip label={record?.type} color="primary" />
+              </div>
+              <br />
+              {/* <PercentageField source="conformityProgress" /> */}
             </SimpleShowLayout>
           </Show>
         </div>
@@ -104,11 +114,12 @@ export const ProjectShow = () => {
             maxWidth: "600px",
             minWidth: "40%",
             marginTop: 25,
-            
           }}
         >
-          {/* Here a Pie chart with needle showing the conformityProgres of the resource*/}
-          <PieChartWithNeedle score={(record?.conformityProgress ?? 0) * 100} width={300} />
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "5px" }}>
+            <div style={{ fontWeight: "bold", fontSize: "1.5em" }}>Conformity Progress</div>
+            <PieChartWithNeedle score={(record?.conformityProgress ?? 0) * 100} width={300} />
+          </div>
         </div>
       </div>
 
